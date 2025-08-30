@@ -1,9 +1,20 @@
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using QuanLyDaiLy_MAUI.Views;
 namespace QuanLyDaiLy_MAUI.ViewModels;
 
-public class MainPageViewModel : ContentPage
+public partial class MainPageViewModel : ObservableObject
 {
 	public MainPageViewModel()
 	{
 		
 	}
+
+	[RelayCommand]
+	async Task OnTapClicked()
+	{
+		var popup = new AddAgent();
+		Application.Current.MainPage.ShowPopup(popup);
+    }
 }

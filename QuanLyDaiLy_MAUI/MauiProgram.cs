@@ -7,6 +7,7 @@ namespace QuanLyDaiLy_MAUI
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+#pragma warning disable MCT001 // `.UseMauiCommunityToolkit()` Not Found on MauiAppBuilder
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -18,12 +19,15 @@ namespace QuanLyDaiLy_MAUI
                     fonts.AddFont("MONTSERRAT-SEMIBOLD.TTF", "MontserratSemiBold");
                     fonts.AddFont("Font-Awesome-7-Free-Solid-900.otf", "FontAwesomeSolid");
                 });
+#pragma warning restore MCT001 // `.UseMauiCommunityToolkit()` Not Found on MauiAppBuilder
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
+            builder.Services.AddTransient<Views.AddAgent>();
+            builder.Services.AddTransient<ViewModels.AddAgentViewModel>();
             return builder.Build();
         }
     }

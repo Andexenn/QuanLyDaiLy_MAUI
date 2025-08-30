@@ -199,8 +199,111 @@
                            Text="{x:Static models:FontAwesome.Recycle}"
                            VerticalOptions="Center"/>
                 </Border>
+
+                <Border Style="{StaticResource Button}"  Grid.Column="3">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding TapClickedCommand}"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="15">
+                        <Label FontFamily="FontAwesomeSolid"
+                               FontSize="20"
+                               Text="{x:Static models:FontAwesome.Plus}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Tiếp nhận đại lý" FontSize="20" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Button}"  Grid.Column="4">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label FontFamily="FontAwesomeSolid"
+                               FontSize="20"
+                               Text="{x:Static models:FontAwesome.Newspaper}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Cập nhật đại lý" FontSize="20" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Button}"  Grid.Column="5">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label FontFamily="FontAwesomeSolid"
+                               FontSize="20"
+                               Text="{x:Static models:FontAwesome.Trash}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Xoá đại lý" FontSize="20" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!--data here-->
+            <Grid Grid.Row="2">
                 
                 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </Grid>
+
+            <Grid Grid.Row="3" ColumnDefinitions="*, auto">
+                <Border Grid.Column="1" StrokeThickness="0">
+                    <HorizontalStackLayout Spacing="20">
+                        <Border Padding="10">
+                            <HorizontalStackLayout Spacing="15">
+                                <Label FontFamily="FontAwesomeSolid"
+                                       FontSize="20"
+                                       TextColor="Black"
+                                       Text="{x:Static models:FontAwesome.TentArrowTurnLeft}"
+                                       VerticalOptions="Center"/>
+                                <Label Text="Trang trước" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Border>
+                            <HorizontalStackLayout>
+                                <Border StrokeShape="RoundRectangle 5" StrokeThickness="0" BackgroundColor="#0eaafd" Padding="10">
+                                    <Label Text="1" VerticalOptions="Center"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="2" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="3" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="4" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="5" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Border Padding="5, 0, 5,0">
+                            <HorizontalStackLayout Spacing="15">
+                                <Label FontFamily="FontAwesomeSolid"
+                                       FontSize="20"
+                                       TextColor="Black"
+                                       Text="{x:Static models:FontAwesome.DiamondTurnRight}"
+                                       VerticalOptions="Center"/>
+                                <Label Text="Trang sau" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </HorizontalStackLayout>
+                </Border>
             </Grid>
         </Grid>
     </Grid>
