@@ -48,35 +48,37 @@ public partial class AddAgentViewModel : ObservableObject
     private void SetNewAgent(DaiLy? agent) => NewAgent = agent ?? new();
 
 
-	[RelayCommand]	
-    private async Task SaveAgentAsync()
-	{
-		if (NewAgent is null)
-			return;
 
-		var busyText = NewAgent.MaDaiLy == 0 ? "Đang thêm đại lý..." : "Đang cập nhật đại lý...";
+    // de tam 
+	//[RelayCommand]	
+ //   private async Task SaveAgentAsync()
+	//{
+	//	if (NewAgent is null)
+	//		return;
 
-        await ExecuteAsync(async () =>
-		{
-            if (NewAgent.MaDaiLy == 0)
-            {
-                // create new
-                await _context.AddItemAsync<DaiLy>(NewAgent);
-                Agents.Add(NewAgent);
-            }
-            else
-            {
-                // update existing
-                await _context.UpdateItemAsync<DaiLy>(NewAgent);
-                var agentCopy = NewAgent.Clone();
-                var index = Agents.IndexOf(Agents.FirstOrDefault(a => a.MaDaiLy == NewAgent.MaDaiLy));
-                Agents.RemoveAt(index);
+	//	var busyText = NewAgent.MaDaiLy == 0 ? "Đang thêm đại lý..." : "Đang cập nhật đại lý...";
 
-                Agents.Insert(index, agentCopy);
-            }
-            SetNewAgentCommand.Execute(new());
-        }, busyText);
-    }
+ //       await ExecuteAsync(async () =>
+	//	{
+ //           if (NewAgent.MaDaiLy == 0)
+ //           {
+ //               // create 
+ //               await _context.AddItemAsync<DaiLy>(NewAgent);
+ //               Agents.Add(NewAgent);
+ //           }
+ //           else
+ //           {
+ //               // update 
+ //               await _context.UpdateItemAsync<DaiLy>(NewAgent);
+ //               var agentCopy = NewAgent.Clone();
+ //               var index = Agents.IndexOf(Agents.FirstOrDefault(a => a.MaDaiLy == NewAgent.MaDaiLy));
+ //               Agents.RemoveAt(index);
+
+ //               Agents.Insert(index, agentCopy);
+ //           }
+ //           SetNewAgentCommand.Execute(new());
+ //       }, busyText);
+ //   }
 
     private bool IsValidAgent()
     {
@@ -101,17 +103,9 @@ public partial class AddAgentViewModel : ObservableObject
 
             try
             {
-                // Attempt to add to database
-                // Replace this line in AddNewAgentAsync:
-                // NewAgent.NgayTiepNhan = NewAgent.NgayTiepNhan.ToString().Split(' ')[0];
-
-                // With this line (no conversion needed, keep as DateTime):
-                // If you want to ensure only the date part is kept (time set to 00:00:00):
-                //NewAgent.NgayTiepNhan = NewAgent.NgayTiepNhan.ToString("dd/MM/yyyy");
                 var success = await _context.AddItemAsync<DaiLy>(NewAgent);
                 if (success)
                 {
-                    // Add to Agents collection
                     Agents.Add(NewAgent);
 
                     await Shell.Current.DisplayAlert(
@@ -120,8 +114,6 @@ public partial class AddAgentViewModel : ObservableObject
                         "OK"
                     );
 
-                    // Optionally reset NewAgent for next entry
-                    //NewAgent = new DaiLy();
                 }
                 else
                 {

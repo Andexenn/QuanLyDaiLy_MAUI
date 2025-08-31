@@ -14,13 +14,5 @@ public partial class MainPage : ContentPage
         _addAgentViewModel = addAgentViewModel;
         _addAgentViewModel.LoadAgentAsync();
 
-        //_addAgentViewModel = new AddAgentViewModel(new DataContext());
     }
-
-    //protected override async void OnAppearing()
-    //{
-    //    base.OnAppearing();
-    //    await Shell.Current.DisplayAlert("Thong báo", "Ứng dụng đang trong giai đoạn phát triển. Mọi lỗi phát sinh vui lòng liên hệ tác giả qua email:", "OK");
-    //    await _addAgentViewModel.LoadAgentAsync();
-    //}
 }
