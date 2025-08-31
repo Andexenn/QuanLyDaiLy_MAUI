@@ -3,11 +3,11 @@ using QuanLyDaiLy_MAUI.Models;
 using System.Linq.Expressions;
 namespace QuanLyDaiLy_MAUI.Data;
 
-public class DataContext
+public class DataContext : IAsyncDisposable
 {
 	private const string DB_NAME = "QuanLyDaiLy.db3";
 	private static string DbPath => Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
-	private SQLiteAsyncConnection _connection;
+	private SQLiteAsyncConnection? _connection;
 	private SQLiteAsyncConnection Database => 
 		_connection ??= new SQLiteAsyncConnection(DbPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache);
    
@@ -75,9 +75,11 @@ public class DataContext
         return await Database.DeleteAsync<TTable>(primaryKey) > 0;
     }
 
-
-    public DataContext()
-	{
-		
-	}
+    public async ValueTask DisposeAsync()
+    {
+        if (_connection != null)
+        {
+            await _connection.CloseAsync();
+        }
+    }
 }

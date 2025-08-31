@@ -8,8 +8,8 @@ public class DaiLy
 	[PrimaryKey, AutoIncrement]
     public int MaDaiLy { get; set; } // Primary Key
 
-    public int MaLoaiDaiLy { get; set; } // Foreign Key
-    public int MaQuan { get; set; } // Foreign Key
+    public string MaLoaiDaiLy { get; set; } // Foreign Key
+    public string MaQuan { get; set; } // Foreign Key
 
 	[Required(ErrorMessage = "Tên đại lý không được để trống")]
 	[System.ComponentModel.DataAnnotations.MaxLength(100, ErrorMessage = "Tên đại lý không được vượt quá 100 ký tự")]
@@ -29,8 +29,7 @@ public class DaiLy
 	public DateTime NgayTiepNhan { get; set; } = DateTime.Now;
 	public long NoDaiLy { get; set; } = 0;
 
-    public DaiLy()
-	{
-		
-	}
+    public DaiLy Clone() => MemberwiseClone() as DaiLy;
+
+    public DaiLy() {}
 }

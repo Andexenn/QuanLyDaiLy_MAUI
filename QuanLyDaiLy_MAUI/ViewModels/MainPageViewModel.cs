@@ -1,20 +1,25 @@
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using QuanLyDaiLy_MAUI.Models;
 using QuanLyDaiLy_MAUI.Views;
+using System.Collections.ObjectModel;
 namespace QuanLyDaiLy_MAUI.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
 {
-	public MainPageViewModel()
-	{
-		
-	}
+    public AddAgentViewModel AddAgentViewModel { get; }
+    public ObservableCollection<DaiLy> Agents => AddAgentViewModel.Agents;
 
-	[RelayCommand]
-	async Task OnTapClicked()
-	{
-		var popup = new AddAgent(new AddAgentViewModel());
-		Application.Current.MainPage.ShowPopup(popup);
+    public MainPageViewModel(AddAgentViewModel addAgentViewModel)
+    {
+        AddAgentViewModel = addAgentViewModel;
+    }
+
+    [RelayCommand]
+    async Task OnTapClicked()
+    {
+        var popup = new AddAgent(AddAgentViewModel); // Use shared instance
+        Application.Current.MainPage.ShowPopup(popup);
     }
 }

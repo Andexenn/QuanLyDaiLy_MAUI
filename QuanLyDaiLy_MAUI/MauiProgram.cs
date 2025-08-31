@@ -26,8 +26,9 @@ namespace QuanLyDaiLy_MAUI
 #endif
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
-            builder.Services.AddTransient<Views.AddAgent>();
-            builder.Services.AddTransient<ViewModels.AddAgentViewModel>();
+            builder.Services.AddSingleton<Views.AddAgent>();
+            builder.Services.AddSingleton<ViewModels.AddAgentViewModel>();
+            builder.Services.AddSingleton<Data.DataContext>();
             return builder.Build();
         }
     }

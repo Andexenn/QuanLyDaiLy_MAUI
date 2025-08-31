@@ -4,6 +4,7 @@ namespace QuanLyDaiLy_MAUI.Views;
 
 public partial class AddAgent : Popup
 {
+
     public AddAgent(AddAgentViewModel vm)
     {
         InitializeComponent();
@@ -20,4 +21,9 @@ public partial class AddAgent : Popup
     {
         await this.CloseAsync();
     }
+
+    // Remove the override and async from OnAppearing, and make it a regular method.
+    // There is no OnAppearing method to override in Popup or its base classes.
+
+    
 }
