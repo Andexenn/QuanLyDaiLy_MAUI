@@ -66,6 +66,13 @@
                 <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
                 <Setter Property="StrokeThickness" Value="0"/>
             </Style>
+
+            <Style TargetType="Label" x:Key="SmallerTab">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontFamily" Value="MontserratSemiBold"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -236,22 +243,46 @@
             </Grid>
 
             <!--data here-->
-            <Grid Grid.Row="2">
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+            <Grid Grid.Row="2" RowDefinitions="Auto, *">
+                <ScrollView Orientation="Horizontal">
+                    <Grid ColumnDefinitions="*, *, *, *, *, *, *, *" BackgroundColor="#ebeef7">
+                        <Label Style="{StaticResource SmallerTab}" Text="Mã đại lý"  />
+                        <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Địa chỉ" Grid.Column="2" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Quận" Grid.Column="3" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Loại đại lý" Grid.Column="4" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Điện thoại" Grid.Column="5" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Ngày tiếp nhận" Grid.Column="6" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Tiền nợ" Grid.Column="7" />
+                    </Grid>
+                </ScrollView>
+                <ScrollView Orientation="Both" Grid.Row="1">
+                    <Grid ColumnDefinitions="*, *, *, *, *, *, *, *">
+                        <Label Style="{StaticResource SmallerTab}" Text="Mã đại lý"  />
+                        <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Địa chỉ" Grid.Column="2" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Quận" Grid.Column="3" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Loại đại lý" Grid.Column="4" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Điện thoại" Grid.Column="5" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Ngày tiếp nhận" Grid.Column="6" />
+                        <Label Style="{StaticResource SmallerTab}" Text="Tiền nợ" Grid.Column="7" />
+                    </Grid>
+                </ScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
             </Grid>
 
             <Grid Grid.Row="3" ColumnDefinitions="*, auto">

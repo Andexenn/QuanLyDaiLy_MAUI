@@ -14,7 +14,7 @@ public partial class MainPageViewModel : ObservableObject
 	[RelayCommand]
 	async Task OnTapClicked()
 	{
-		var popup = new AddAgent();
+		var popup = new AddAgent(new AddAgentViewModel());
 		Application.Current.MainPage.ShowPopup(popup);
     }
 }

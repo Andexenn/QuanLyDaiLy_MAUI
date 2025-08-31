@@ -3,9 +3,149 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuanLyDaiLy_MAUI.Views.AddAgent"
              xmlns:viewmodel="clr-namespace:QuanLyDaiLy_MAUI.ViewModels"
+             xmlns:model="clr-namespace:QuanLyDaiLy_MAUI.Models"
              x:DataType="viewmodel:AddAgentViewModel"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    
+    <toolkit:Popup.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Grid" x:Key="BigGrid">
+                <Setter Property="RowDefinitions" Value="Auto, Auto, Auto"/>
+                <Setter Property="HeightRequest" Value="500"/>
+                <Setter Property="WidthRequest" Value="800"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="RowSpacing" Value="15"/>
+            </Style>
+            
+            <Style TargetType="Label" x:Key="Header">
+                <Setter Property="Text" Value="Tiếp nhận đại lý"/>
+                <Setter Property="FontFamily" Value="MontserratSemiBold"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="Grid.Row" Value="0"/>
+                <Setter Property="Grid.Column" Value="0"/>
+            </Style>
 
-    <Label Text="Hungdepzai" TextColor="Black" FontSize="40"/>
+            <Style TargetType="Label" x:Key="Close">
+                <Setter Property="FontFamily" Value="FontAwesomeSolid"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="Text" Value="{x:Static model:FontAwesome.x}"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="Grid.Row" Value="0"/>
+                <Setter Property="Grid.Column" Value="2"/>
+            </Style>
+
+            <Style TargetType="Button" x:Key="Button">
+                <Setter Property="BackgroundColor" Value="#0eaafd"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Padding" Value="15, 10, 15, 10"/>
+                <Setter Property="Grid.Row" Value="1"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontFamily" Value="MontserratRegular"/>
+            </Style>
+        </ResourceDictionary>
+    </toolkit:Popup.Resources>
+    
+    <Grid Style="{StaticResource BigGrid}">
+        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto" RowSpacing="15">
+            <Label Style="{StaticResource Header}"/>
+            <Label Style="{StaticResource Close}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCloseClicked"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <BoxView Grid.Row="2" Grid.ColumnSpan="3" HeightRequest="2" BackgroundColor="Black"/>
+        </Grid>
+
+        <Border Grid.Row="1"
+                StrokeShape="RoundRectangle 10"
+                Padding="20"
+                BackgroundColor="#f8f7fc">
+            <VerticalStackLayout Spacing="20">
+                <Grid ColumnDefinitions="*, *, *, *"
+                      ColumnSpacing="10">
+                    <VerticalStackLayout Spacing="10" Grid.Column="0">
+                        <Label Text="Mã đại lý" TextColor="Black"/>
+                        <Border>
+                            <Entry TextColor="Black"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="10" Grid.Column="1">
+                        <Label Text="Tên đại lý" TextColor="Black"/>
+                        <Border>
+                            <Entry TextColor="Black"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="10" Grid.Column="2">
+                        <Label Text="Tên loại đại lý" TextColor="Black"/>
+                        <Border>
+                            <Picker TextColor="Black">
+                                <Picker.Items>
+                                    <x:String>Đại lý 1</x:String>
+                                    <x:String>Đại lý 2</x:String>
+                                    <x:String>Đại lý 3</x:String>
+                                </Picker.Items>
+                            </Picker>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="10" Grid.Column="3">
+                        <Label Text="Tên quận" TextColor="Black"/>
+                        <Border>
+                            <Picker TextColor="Black">
+                                <Picker.Items>
+                                    <x:String>Quận 1</x:String>
+                                    <x:String>Quận 2</x:String>
+                                    <x:String>Quận 3</x:String>
+                                    <x:String>Quận 4</x:String>
+                                </Picker.Items>
+                            </Picker>
+                        </Border>
+                    </VerticalStackLayout>
+
+                </Grid>
+
+                <Grid ColumnDefinitions="*, *, *" ColumnSpacing="10">
+                    <VerticalStackLayout Spacing="10" Grid.Column="0">
+                        <Label Text="Số điện thoại" TextColor="Black"/>
+                        <Border>
+                            <Entry TextColor="Black"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="10" Grid.Column="1">
+                        <Label Text="Email" TextColor="Black"/>
+                        <Border>
+                            <Entry TextColor="Black"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="10" Grid.Column="2">
+                        <Label Text="Ngày tiếp nhận" TextColor="Black"/>
+                        <Border>
+                            <DatePicker TextColor="Black"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Địa chỉ" TextColor="Black"/>
+                    <Border>
+                        <Entry TextColor="Black"/>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+
+        <Grid Grid.Row="2" RowDefinitions="Auto, Auto" ColumnDefinitions="*, *, *" RowSpacing="30" ColumnSpacing="10">
+            <BoxView Grid.ColumnSpan="3" HeightRequest="2" Color="Black"/>
+            <Button  Grid.Column="0" Text="Tiếp nhận đại lý" Style="{StaticResource Button}" Command="{Binding AnnounceCommand}"/>
+            <Button Grid.Column="1" Text="Đại lý mới" Style="{StaticResource Button}"/>
+            <Button Grid.Column="2" Text="Thoát" Style="{StaticResource Button}" Clicked="OnCloseClicked"/>
+            
+        </Grid>
+    </Grid>
 
 </toolkit:Popup>
