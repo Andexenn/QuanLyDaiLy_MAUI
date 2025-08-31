@@ -201,6 +201,9 @@
                 </Border>
 
                 <Border Style="{StaticResource Button}" Grid.Column="1">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RefreshCommand}"/>
+                    </Border.GestureRecognizers>
                     <Label FontFamily="FontAwesomeSolid"
                            FontSize="20"
                            Text="{x:Static models:FontAwesome.Recycle}"
@@ -269,7 +272,7 @@
                                         <Label Style="{StaticResource SmallerTab}" Text="{Binding MaQuan}" Grid.Column="3" />
                                         <Label Style="{StaticResource SmallerTab}" Text="{Binding MaLoaiDaiLy}" Grid.Column="4" />
                                         <Label Style="{StaticResource SmallerTab}" Text="{Binding SoDienThoai}" Grid.Column="5" />
-                                        <Label Style="{StaticResource SmallerTab}" Text="{Binding NgayTiepNhan}" Grid.Column="6" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="{Binding NgayTiepNhan, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="6" />
                                         <Label Style="{StaticResource SmallerTab}" Text="{Binding NoDaiLy}" Grid.Column="7" />
                                         <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="8"/>
                                     </Grid>

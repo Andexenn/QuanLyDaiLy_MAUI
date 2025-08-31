@@ -75,6 +75,25 @@ public class DataContext : IAsyncDisposable
         return await Database.DeleteAsync<TTable>(primaryKey) > 0;
     }
 
+    public async Task DropTableAsync<TTable>() where TTable : class, new()
+    {
+        var tableName = typeof(TTable).Name;
+        await Database.ExecuteAsync($"DROP TABLE IF EXISTS [{tableName}]");
+    }
+
+    public async Task DeleteAllRowsAsync<TTable>() where TTable : class, new()
+    {
+        //var table = await GetTableAsync<TTable>();
+        //var allItems = await table.ToListAsync();
+        //foreach (var item in allItems)
+        //{
+        //    await Database.DeleteAsync(item);
+        //}
+
+        var tableName = typeof(TTable).Name;
+        await Database.ExecuteAsync($"DELETE FROM [{tableName}]");
+    }
+
     public async ValueTask DisposeAsync()
     {
         if (_connection != null)

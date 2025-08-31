@@ -22,4 +22,10 @@ public partial class MainPageViewModel : ObservableObject
         var popup = new AddAgent(AddAgentViewModel); // Use shared instance
         Application.Current.MainPage.ShowPopup(popup);
     }
+
+    [RelayCommand]
+    async Task RefreshAsync()
+    {
+        await AddAgentViewModel.DeleteAllRows();
+    }
 }

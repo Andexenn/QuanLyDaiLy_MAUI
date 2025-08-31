@@ -102,6 +102,12 @@ public partial class AddAgentViewModel : ObservableObject
             try
             {
                 // Attempt to add to database
+                // Replace this line in AddNewAgentAsync:
+                // NewAgent.NgayTiepNhan = NewAgent.NgayTiepNhan.ToString().Split(' ')[0];
+
+                // With this line (no conversion needed, keep as DateTime):
+                // If you want to ensure only the date part is kept (time set to 00:00:00):
+                //NewAgent.NgayTiepNhan = NewAgent.NgayTiepNhan.ToString("dd/MM/yyyy");
                 var success = await _context.AddItemAsync<DaiLy>(NewAgent);
                 if (success)
                 {
@@ -109,7 +115,7 @@ public partial class AddAgentViewModel : ObservableObject
                     Agents.Add(NewAgent);
 
                     await Shell.Current.DisplayAlert(
-                        "Thành công",
+                        "Thành công ✨",
                         $"Đã thêm đại lý mới: {NewAgent.TenDaiLy}",
                         "OK"
                     );
@@ -119,7 +125,7 @@ public partial class AddAgentViewModel : ObservableObject
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Lỗi", "Không thể thêm đại lý mới vào cơ sở dữ liệu.", "OK");
+                    await Shell.Current.DisplayAlert("Lỗi 🐞", "Không thể thêm đại lý mới vào cơ sở dữ liệu.", "OK");
                 }
             }
             catch (Exception ex)
@@ -146,6 +152,16 @@ public partial class AddAgentViewModel : ObservableObject
                 await Shell.Current.DisplayAlert("Lỗi", "Xóa đại lý thất bại!", "OK");
             }
         }, "Đang xoá");
+    }
+
+    
+    public async Task DeleteAllRows()
+    {
+        await ExecuteAsync(async () =>
+        {
+            await _context.DeleteAllRowsAsync<DaiLy>();
+            Agents.Clear();
+        });
     }
 
 	private async Task ExecuteAsync(Func<Task> action, string? busyText = null)

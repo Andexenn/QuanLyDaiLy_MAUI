@@ -6,11 +6,14 @@ namespace QuanLyDaiLy_MAUI;
 
 public partial class MainPage : ContentPage
 {
-    //private readonly AddAgentViewModel _addAgentViewModel;
-    public MainPage(MainPageViewModel vm)
+    private readonly AddAgentViewModel _addAgentViewModel;
+    public MainPage(MainPageViewModel vm, AddAgentViewModel addAgentViewModel)
     {
         InitializeComponent();
         BindingContext = vm;
+        _addAgentViewModel = addAgentViewModel;
+        _addAgentViewModel.LoadAgentAsync();
+
         //_addAgentViewModel = new AddAgentViewModel(new DataContext());
     }
 
