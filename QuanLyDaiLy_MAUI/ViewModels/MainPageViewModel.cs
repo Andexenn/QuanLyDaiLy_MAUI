@@ -8,24 +8,5 @@ namespace QuanLyDaiLy_MAUI.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
 {
-    public AddAgentViewModel AddAgentViewModel { get; }
-    public ObservableCollection<DaiLy> Agents => AddAgentViewModel.Agents;
-
-    public MainPageViewModel(AddAgentViewModel addAgentViewModel)
-    {
-        AddAgentViewModel = addAgentViewModel;
-    }
-
-    [RelayCommand]
-    async Task OnTapClicked()
-    {
-        var popup = new AddAgent(AddAgentViewModel); 
-        Application.Current.MainPage.ShowPopup(popup);
-    }
-
-    [RelayCommand]
-    async Task RefreshAsync()
-    {
-        await AddAgentViewModel.DeleteAllRows();
-    }
+   
 }

@@ -12,7 +12,6 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = vm;
         _addAgentViewModel = addAgentViewModel;
-        _addAgentViewModel.LoadAgentAsync();
 
     }
 }
