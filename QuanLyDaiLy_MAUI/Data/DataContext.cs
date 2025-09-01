@@ -1,104 +1,33 @@
 using SQLite;
 using QuanLyDaiLy_MAUI.Models;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 namespace QuanLyDaiLy_MAUI.Data;
 
-public class DataContext : IAsyncDisposable
+public class DataContext : DbContext
 {
-	private const string DB_NAME = "QuanLyDaiLy.db3";
-	private static string DbPath => Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
-	private SQLiteAsyncConnection? _connection;
-	private SQLiteAsyncConnection Database => 
-		_connection ??= new SQLiteAsyncConnection(DbPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache);
-   
+	public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-	private async Task CreateTableIfNotExist<TTable>() where TTable : class, new()
-	{
-		await Database.CreateTableAsync<TTable>();
-    }
-	
-	private async Task<AsyncTableQuery<TTable>> GetTableAsync<TTable>() where TTable : class, new()
-	{
-		await CreateTableIfNotExist<TTable>();
-		return Database.Table<TTable>();
-    }
+	public DbSet<DaiLy> DaiLies { get; set; } = null!;
+	public DbSet<LoaiDaiLy> LoaiDaiLies { get; set; } = null!;
+    public DbSet<Quan> Quans { get; set; } = null!;
+	public DbSet<ThamSo> ThamSos { get; set; } = null!;
 
-    public async Task<IEnumerable<TTable>> GetAllAsync<TTable>() where TTable : class, new()
-	{
-		var table = await GetTableAsync<TTable>();
-		return await table.ToListAsync();
-    }
-
-    public async Task<IEnumerable<TTable>> GetFilteredAsync<TTable>(Expression<Func<TTable, bool>> predicate) where TTable : class, new()
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var table = await GetTableAsync<TTable>();
-		return await table.Where(predicate).ToListAsync();
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<LoaiDaiLy>()
+            .HasMany(ldl => ldl.DaiLies)
+            .WithOne(dl => dl.LoaiDaiLy)
+            .HasForeignKey(dl => dl.MaLoaiDaiLy)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Quan>()
+            .HasMany(q => q.DaiLies)
+            .WithOne(dl => dl.Quan)
+            .HasForeignKey(dl => dl.MaQuan)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
-    private async Task<TResult> Execute<TTable, TResult>(Func<Task<TResult>> action) where TTable : class, new()
-    {
-        await CreateTableIfNotExist<TTable>();
-        return await action();
-    }
-
-    public async Task<TTable> GetItemByKeyAsync<TTable>(object primaryKey) where TTable : class, new()
-    {
-        return await Execute<TTable, TTable>(async () => await Database.GetAsync<TTable>(primaryKey));
-
-        //await CreateTableIfNotExist<TTable>();
-        //return await Database.GetAsync<TTable>(primaryKey);
-    }
-
-
-    public async Task<bool> AddItemAsync<TTable>(TTable item) where TTable : class, new()
-	{
-        //await CreateTableIfNotExist<TTable>();
-        //      return await Database.InsertAsync(item) > 0;
-        return await Execute<TTable, bool>(async () => await Database.InsertAsync(item) > 0);
-    }
-
-    public async Task<bool> UpdateItemAsync<TTable>(TTable item) where TTable : class, new()
-    {
-        await CreateTableIfNotExist<TTable>();
-        return await Database.UpdateAsync(item) > 0;
-    }
-
-    public async Task<bool> DeleteItemAsync<TTable>(TTable item) where TTable : class, new()
-    {
-        await CreateTableIfNotExist<TTable>();
-        return await Database.DeleteAsync(item) > 0;
-    }
-
-    public async Task<bool> DeleteItemByKeyAsync<TTable>(object primaryKey) where TTable : class, new()
-    {
-        await CreateTableIfNotExist<TTable>();
-        return await Database.DeleteAsync<TTable>(primaryKey) > 0;
-    }
-
-    public async Task DropTableAsync<TTable>() where TTable : class, new()
-    {
-        var tableName = typeof(TTable).Name;
-        await Database.ExecuteAsync($"DROP TABLE IF EXISTS [{tableName}]");
-    }
-
-    public async Task DeleteAllRowsAsync<TTable>() where TTable : class, new()
-    {
-        //var table = await GetTableAsync<TTable>();
-        //var allItems = await table.ToListAsync();
-        //foreach (var item in allItems)
-        //{
-        //    await Database.DeleteAsync(item);
-        //}
-
-        var tableName = typeof(TTable).Name;
-        await Database.ExecuteAsync($"DELETE FROM [{tableName}]");
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_connection != null)
-        {
-            await _connection.CloseAsync();
-        }
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using QuanLyDaiLy_MAUI.DI;
 
 namespace QuanLyDaiLy_MAUI
 {
@@ -24,12 +25,17 @@ namespace QuanLyDaiLy_MAUI
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
-            builder.Services.AddSingleton<Views.AddAgent>();
-            builder.Services.AddSingleton<ViewModels.AddAgentViewModel>();
-            builder.Services.AddSingleton<Data.DataContext>();
-            return builder.Build();
+            builder.Services.RegisterDependency();
+
+            var appBuilder = builder.Build();
+
+            _ = Task.Run( async () =>
+            {
+                using var scope = appBuilder.Services.CreateScope();
+                await scope.ServiceProvider.GetRequiredService<Services.DatabaseService>().InitializeAsync();
+            });
+
+            return appBuilder;
         }
     }
 }

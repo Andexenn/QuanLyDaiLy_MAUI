@@ -63,6 +63,7 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.100" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
@@ -73,10 +74,6 @@
 	  <MauiXaml Update="Views\AddAgent.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>
