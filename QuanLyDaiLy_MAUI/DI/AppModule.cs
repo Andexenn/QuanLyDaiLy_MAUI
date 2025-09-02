@@ -11,6 +11,8 @@ using QuanLyDaiLy_MAUI.ServiceImpls;
 using QuanLyDaiLy_MAUI.Services;
 using QuanLyDaiLy_MAUI.ViewModels;
 using QuanLyDaiLy_MAUI.Views;
+using QuanLyDaiLy_MAUI.Repositories;
+using QuanLyDaiLy_MAUI.Interfaces;
 
 namespace QuanLyDaiLy_MAUI.DI;
 
@@ -31,7 +33,21 @@ public static class AppModule
             options.UseSqlite($"Data Source={databasePath}");
         });
 
+        // dang ky service
         services.AddScoped<DatabaseService, DatabaseServiceImpl>();
+        services.AddScoped<IDaiLyService, DaiLyServiceImpl>();
+        services.AddScoped<IQuanService, QuanServiceImpl>();
+        services.AddScoped<ILoaiDaiLyService, LoaiDaiLyServiceImpl>();
+        services.AddScoped<IThamSoService, ThamSoServiceImpl>();
+
+        // dang ky repository
+        services.AddScoped<IDaiLyRepository, DaiLyRepository>();
+        services.AddScoped<IQuanRepository, QuanRepository>();
+        services.AddScoped<ILoaiDaiLyRepository, LoaiDaiLyRepository>();
+        services.AddScoped<IThamSoRepository, ThamSoRepository>();
+
+        // dang ky view
+
 
         return services;
     }
