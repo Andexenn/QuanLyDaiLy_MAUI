@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuanLyDaiLy_MAUI.Views.DaiLyViews.DanhSachDaiLyPage"
+             xmlns:models="clr-namespace:QuanLyDaiLy_MAUI.Models"
+             xmlns:viewmodels="clr-namespace:QuanLyDaiLy_MAUI.ViewModels.DaiLyViewModels"
+             x:DataType="viewmodels:DanhSachDaiLyPageViewModel"
+             Shell.NavBarIsVisible="False">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Border" x:Key="Nav">
+                <Setter Property="StrokeThickness" Value="0"/>
+                <Setter Property="Grid.ColumnSpan" Value="2"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="#f8f7fc"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="Logo_text">
+                <Setter Property="TextColor" Value="#367cc9"/>
+                <Setter Property="FontFamily" Value="MontserratBold"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Text" Value="UIT Together"/>
+            </Style>
+
+            <Style TargetType="Image" x:Key="Logo_image">
+                <Setter Property="Source" Value="uittogether_removebg_preview.png"/>
+                <Setter Property="HeightRequest" Value="60"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="Tab">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+
+            <Style TargetType="Grid" x:Key="LeftBar">
+                <Setter Property="RowDefinitions" Value="Auto, Auto, Auto, Auto, *, Auto"/>
+                <Setter Property="Grid.Column" Value="0"/>
+                <Setter Property="Grid.Row" Value="1"/>
+                <Setter Property="BackgroundColor" Value="#f8f7fc" />
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="RowSpacing" Value="35"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="LeftBarElement">
+                <Setter Property="FontFamily" Value="FontAwesomeSolid"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="40"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Grid" x:Key="Table">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="RowDefinitions" Value="Auto, Auto, Auto, Auto"/>
+                <Setter Property="Grid.Column" Value="1"/>
+                <Setter Property="Grid.Row" Value="1"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="RowSpacing" Value="20"/>
+            </Style>
+
+            <Style TargetType="Border" x:Key="Button">
+                <Setter Property="BackgroundColor" Value="#0eaafd"/>
+                <Setter Property="Padding" Value="30, 10, 30, 10"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="SmallerTab">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontFamily" Value="MontserratSemiBold"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="Data">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontFamily" Value="MontserratRegular"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *"
+          ColumnDefinitions="Auto, *">
+        <Border Style="{StaticResource Nav}">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <HorizontalStackLayout Grid.Column="0"
+                                       Spacing="5">
+                    <Image Style="{StaticResource Logo_image}"/>
+                    <Label Style="{StaticResource Logo_text}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="2"
+                                       Spacing="25">
+
+                    <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label FontFamily="FontAwesomeSolid"
+                                   TextColor="#0eaafd"
+                                   Text="{x:Static models:FontAwesome.House}"
+                                   Style="{StaticResource Tab}"/>
+                            <Label Text="Đại lý"
+                                   TextColor="#0eaafd"
+                                   FontFamily="MontserratSemiBold"
+                                   Style="{StaticResource Tab}"/>
+                        </HorizontalStackLayout>
+                        <BoxView HeightRequest="2"
+                                 BackgroundColor="#0eaafd"
+                                 HorizontalOptions="Fill"
+                                 Margin="0,4,0,0"/>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="FontAwesomeSolid"
+                                Text="{x:Static models:FontAwesome.Ticket}"
+                                Style="{StaticResource Tab}"/>
+                        <Label Text="Loại đại lý"
+                                FontFamily="MontserratSemiBold"
+                                Style="{StaticResource Tab}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="FontAwesomeSolid"
+                                Text="{x:Static models:FontAwesome.LocationDot}"
+                                Style="{StaticResource Tab}"/>
+                        <Label Text="Quận"
+                                FontFamily="MontserratSemiBold"
+                                Style="{StaticResource Tab}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="FontAwesomeSolid"
+                                Text="{x:Static models:FontAwesome.MoneyBill}"
+                                Style="{StaticResource Tab}"/>
+                        <Label Text="Mặt hàng"
+                                FontFamily="MontserratSemiBold"
+                                Style="{StaticResource Tab}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="FontAwesomeSolid"
+                                Text="{x:Static models:FontAwesome.Inbox}"
+                                Style="{StaticResource Tab}"/>
+                        <Label Text="Phiếu thu"
+                                FontFamily="MontserratSemiBold"
+                                Style="{StaticResource Tab}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="FontAwesomeSolid"
+                                Text="{x:Static models:FontAwesome.Outdent}"
+                                Style="{StaticResource Tab}"/>
+                        <Label Text="Phiếu xuất"
+                                FontFamily="MontserratSemiBold"
+                                Style="{StaticResource Tab}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="FontAwesomeSolid"
+                                Text="{x:Static models:FontAwesome.ScaleBalanced}"
+                                Style="{StaticResource Tab}"/>
+                        <Label Text="Đơn vị tính"
+                                FontFamily="MontserratSemiBold"
+                                Style="{StaticResource Tab}"/>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Grid Style="{StaticResource LeftBar}">
+            <Label Style="{StaticResource LeftBarElement}"
+                   Grid.Row="0"
+                   Text="{x:Static models:FontAwesome.Film}"/>
+
+            <Border BackgroundColor="#0eaafd" Grid.Row="1" StrokeThickness="0" StrokeShape="RoundRectangle 10">
+                <Label Style="{StaticResource LeftBarElement}" 
+                       Text="{x:Static models:FontAwesome.Bars}"
+                       Padding="10"/>
+            </Border>
+
+            <Label Style="{StaticResource LeftBarElement}"
+                   Grid.Row="2"
+                   Text="{x:Static models:FontAwesome.ChartLine}"/>
+
+            <Label Style="{StaticResource LeftBarElement}"
+                   Grid.Row="3"
+                   Text="{x:Static models:FontAwesome.Gear}"/>
+        </Grid>
+
+        <Grid Style="{StaticResource Table}">
+            <Label Text="Danh sách đại lý"
+                   FontFamily="MontserratBold"
+                   TextColor="Black"
+                   FontSize="30"/>
+            <Grid Grid.Row="1"
+                  ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto"
+                  ColumnSpacing="20">
+                <Border Style="{StaticResource Button}"  Grid.Column="0">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label FontFamily="FontAwesomeSolid"
+                               FontSize="20"
+                               Text="{x:Static models:FontAwesome.UsersViewfinder}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Tra cứu đại lý" FontSize="20" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Button}" Grid.Column="1">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RefreshCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label FontFamily="FontAwesomeSolid"
+                           FontSize="20"
+                           Text="{x:Static models:FontAwesome.Recycle}"
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <Border Style="{StaticResource Button}"  Grid.Column="3">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ThemDaiLyButtonCommand}"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="15">
+                        <Label FontFamily="FontAwesomeSolid"
+                               FontSize="20"
+                               Text="{x:Static models:FontAwesome.Plus}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Tiếp nhận đại lý" FontSize="20" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Button}"  Grid.Column="4">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label FontFamily="FontAwesomeSolid"
+                               FontSize="20"
+                               Text="{x:Static models:FontAwesome.Newspaper}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Cập nhật đại lý" FontSize="20" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Button}"  Grid.Column="5">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label FontFamily="FontAwesomeSolid"
+                               FontSize="20"
+                               Text="{x:Static models:FontAwesome.Trash}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Xoá đại lý" FontSize="20" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!--data here-->
+            <Border Grid.Row="2">
+                <Grid RowDefinitions="Auto, *" RowSpacing="5">
+                    <ScrollView Orientation="Horizontal">
+                        <Grid ColumnDefinitions="*, *, *, *, *, *, *, *" BackgroundColor="#ebeef7" Padding="0,5,0,5">
+                            <Label Style="{StaticResource SmallerTab}" Text="Mã đại lý"  />
+                            <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                            <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                            <Label Style="{StaticResource SmallerTab}" Text="Địa chỉ" Grid.Column="2" />
+                            <Label Style="{StaticResource SmallerTab}" Text="Quận" Grid.Column="3" />
+                            <Label Style="{StaticResource SmallerTab}" Text="Loại đại lý" Grid.Column="4" />
+                            <Label Style="{StaticResource SmallerTab}" Text="Điện thoại" Grid.Column="5" />
+                            <Label Style="{StaticResource SmallerTab}" Text="Ngày tiếp nhận" Grid.Column="6" />
+                            <Label Style="{StaticResource SmallerTab}" Text="Tiền nợ" Grid.Column="7" />
+                        </Grid>
+                    </ScrollView>
+                    <ScrollView Orientation="Both" Grid.Row="1" HeightRequest="450">
+                        <CollectionView ItemsSource="{Binding Agents}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:DaiLy">
+                                    <Grid ColumnDefinitions="*, *, *, *, *, *, *, *" RowDefinitions="Auto, Auto" VerticalOptions="Start" RowSpacing="10" Padding="0, 5, 0,0">
+                                        <Label Style="{StaticResource Data}" Text="{Binding MaDaiLy}" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding TenDaiLy}" Grid.Column="1" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding DiaChi}" Grid.Column="2" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding MaQuan}" Grid.Column="3" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding MaLoaiDaiLy}" Grid.Column="4" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding SoDienThoai}" Grid.Column="5" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding NgayTiepNhan, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="6" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding NoDaiLy}" Grid.Column="7" />
+                                        <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="8"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+                    </ScrollView>
+
+                </Grid>
+            </Border>
+
+
+            <Grid Grid.Row="3" ColumnDefinitions="*, auto">
+                <Border Grid.Column="1" StrokeThickness="0">
+                    <HorizontalStackLayout Spacing="20">
+                        <Border Padding="10" StrokeShape="RoundRectangle 10">
+                            <HorizontalStackLayout Spacing="15">
+                                <Label FontFamily="FontAwesomeSolid"
+                                       FontSize="20"
+                                       TextColor="Black"
+                                       Text="{x:Static models:FontAwesome.TentArrowTurnLeft}"
+                                       VerticalOptions="Center"/>
+                                <Label Text="Trang trước" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Border StrokeShape="RoundRectangle 10">
+                            <HorizontalStackLayout>
+                                <Border StrokeThickness="0" BackgroundColor="#0eaafd" Padding="10">
+                                    <Label Text="1" VerticalOptions="Center"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="2" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="3" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="4" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+
+                                <Border StrokeThickness="0" Padding="10">
+                                    <Label Text="5" VerticalOptions="Center" TextColor="Black"/>
+                                </Border>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Border Padding="5, 0, 5,0" StrokeShape="RoundRectangle 10">
+                            <HorizontalStackLayout Spacing="15">
+                                <Label FontFamily="FontAwesomeSolid"
+                                       FontSize="20"
+                                       TextColor="Black"
+                                       Text="{x:Static models:FontAwesome.DiamondTurnRight}"
+                                       VerticalOptions="Center"/>
+                                <Label Text="Trang sau" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</ContentPage>

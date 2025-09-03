@@ -13,6 +13,7 @@ using QuanLyDaiLy_MAUI.ViewModels;
 using QuanLyDaiLy_MAUI.Views;
 using QuanLyDaiLy_MAUI.Repositories;
 using QuanLyDaiLy_MAUI.Interfaces;
+using QuanLyDaiLy_MAUI.Views.DaiLyViews;
 
 namespace QuanLyDaiLy_MAUI.DI;
 
@@ -20,10 +21,7 @@ public static class AppModule
 {
     public static IServiceCollection RegisterDependency(this IServiceCollection services)
     {
-        services.AddSingleton<MainPage>();
-        services.AddSingleton<MainPageViewModel>();
-        services.AddSingleton<AddAgent>();
-        services.AddSingleton<AddAgentViewModel>();
+        
 
         services.AddSingleton<DatabaseConfig>();
 
@@ -47,7 +45,12 @@ public static class AppModule
         services.AddScoped<IThamSoRepository, ThamSoRepository>();
 
         // dang ky view
+        services.AddTransient<DanhSachDaiLyPage>();
+        services.AddTransient<ThemDaiLyModal>();
 
+        //dang ky viewmodel
+        services.AddTransient<ViewModels.DaiLyViewModels.DanhSachDaiLyPageViewModel>();
+        services.AddTransient<ViewModels.DaiLyViewModels.ThemDaiLyModalViewModel>();
 
         return services;
     }

@@ -5,7 +5,7 @@
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(Views.AddAgent), typeof(Views.AddAgent));
+            Routing.RegisterRoute(nameof(Views.DaiLyViews.ThemDaiLyModal), typeof(Views.DaiLyViews.ThemDaiLyModal));
         }
     }
 }
