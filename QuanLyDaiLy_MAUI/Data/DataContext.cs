@@ -2,6 +2,7 @@ using SQLite;
 using QuanLyDaiLy_MAUI.Models;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using QuanLyDaiLy_MAUI.Helpers;
 namespace QuanLyDaiLy_MAUI.Data;
 
 public class DataContext : DbContext
@@ -28,6 +29,8 @@ public class DataContext : DbContext
             .WithOne(dl => dl.Quan)
             .HasForeignKey(dl => dl.MaQuan)
             .OnDelete(DeleteBehavior.Cascade);
+
+        DatabaseSeeder.SeedData(modelBuilder);
     }
 
 }

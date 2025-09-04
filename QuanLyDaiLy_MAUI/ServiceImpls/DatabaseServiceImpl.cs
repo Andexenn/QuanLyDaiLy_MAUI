@@ -10,14 +10,9 @@ class DatabaseServiceImpl : DatabaseService
 
     public DatabaseServiceImpl(DatabaseConfig databaseConfig) => _databaseConfig = databaseConfig;
 
-    public async Task InitializeAsync()
+    public void InitializeAsync()
     {
-        await _databaseConfig.Initialize();
-        await SeedData();
+        _databaseConfig.Initialize();
     }
 
-    private async Task SeedData()
-    {
-        await Task.CompletedTask;
-    }
 }

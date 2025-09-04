@@ -31,12 +31,16 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 		IsLoading = true;
 		try
 		{
-			daiLies = new ObservableCollection<DaiLy>(await _daiLyService.GetAllDaiLyAsync());
+			DaiLies = new ObservableCollection<DaiLy>(await _daiLyService.GetAllDaiLyAsync());
 		}
 		catch (Exception ex)
 		{
 			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
 		}
+		finally
+		{
+			IsLoading = false;
+        }
 	}
 
     [RelayCommand]

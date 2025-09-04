@@ -32,8 +32,8 @@ class DatabaseConfig
         return Path.Combine(databaseDirectory, $"QuanLyDaiLy.db3");
     }
 
-    public async Task Initialize()
+    public void Initialize()
     {
-        await _dataContext.Database.EnsureCreatedAsync();
+        _dataContext.Database.EnsureCreated();
     }
 }

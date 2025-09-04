@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using QuanLyDaiLy_MAUI.DI;
+using QuanLyDaiLy_MAUI.Services;
 
 namespace QuanLyDaiLy_MAUI
 {
@@ -29,11 +30,8 @@ namespace QuanLyDaiLy_MAUI
 
             var appBuilder = builder.Build();
 
-            _ = Task.Run( async () =>
-            {
-                using var scope = appBuilder.Services.CreateScope();
-                await scope.ServiceProvider.GetRequiredService<Services.DatabaseService>().InitializeAsync();
-            });
+            appBuilder.Services.GetRequiredService<DatabaseService>().InitializeAsync();
+
 
             return appBuilder;
         }

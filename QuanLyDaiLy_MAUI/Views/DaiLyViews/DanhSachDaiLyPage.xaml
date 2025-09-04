@@ -209,7 +209,7 @@
 
                 <Border Style="{StaticResource Button}" Grid.Column="1">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding RefreshCommand}"/>
+                        <TapGestureRecognizer Command="{Binding LoadDaiLyButtonCommand}"/>
                     </Border.GestureRecognizers>
                     <Label FontFamily="FontAwesomeSolid"
                            FontSize="20"
@@ -269,14 +269,14 @@
                         </Grid>
                     </ScrollView>
                     <ScrollView Orientation="Both" Grid.Row="1" HeightRequest="450">
-                        <CollectionView ItemsSource="{Binding Agents}">
+                        <CollectionView ItemsSource="{Binding DaiLies}">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:DaiLy">
                                     <Grid ColumnDefinitions="*, *, *, *, *, *, *, *" RowDefinitions="Auto, Auto" VerticalOptions="Start" RowSpacing="10" Padding="0, 5, 0,0">
                                         <Label Style="{StaticResource Data}" Text="{Binding MaDaiLy}" />
-                                        <Label Style="{StaticResource Data}" Text="{Binding TenDaiLy}" Grid.Column="1" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding TenLoaiDaiLy}" Grid.Column="1" />
                                         <Label Style="{StaticResource Data}" Text="{Binding DiaChi}" Grid.Column="2" />
-                                        <Label Style="{StaticResource Data}" Text="{Binding MaQuan}" Grid.Column="3" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding TenQuan}" Grid.Column="3" />
                                         <Label Style="{StaticResource Data}" Text="{Binding MaLoaiDaiLy}" Grid.Column="4" />
                                         <Label Style="{StaticResource Data}" Text="{Binding SoDienThoai}" Grid.Column="5" />
                                         <Label Style="{StaticResource Data}" Text="{Binding NgayTiepNhan, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="6" />

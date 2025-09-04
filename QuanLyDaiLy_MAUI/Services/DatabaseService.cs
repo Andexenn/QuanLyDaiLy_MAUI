@@ -2,5 +2,5 @@
 
 public interface DatabaseService
 {
-    Task InitializeAsync();
+    void InitializeAsync();
 }

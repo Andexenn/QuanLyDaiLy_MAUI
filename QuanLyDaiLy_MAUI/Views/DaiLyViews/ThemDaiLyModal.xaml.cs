@@ -9,6 +9,7 @@ public partial class ThemDaiLyModal : Popup
 	{
 		InitializeComponent();
 		this.BindingContext = vm;
+        vm.SetCurrentPopup(this);
     }
 
     private async void OnCloseClicked(object sender, EventArgs e)

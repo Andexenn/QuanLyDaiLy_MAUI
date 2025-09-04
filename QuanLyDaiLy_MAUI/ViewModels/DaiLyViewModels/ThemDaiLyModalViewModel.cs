@@ -54,7 +54,7 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
 	private async Task LoadDataAsync()
 	{
         NgayTiepNhan = DateTime.Now;
-		MaDaiLy = await _daiLyService.GetNextAvailableIdAsync();
+        MaDaiLy = await _daiLyService.GetNextAvailableIdAsync() + 1;
 
         _ = LoadComboBoxData();
     }
@@ -101,7 +101,7 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
             }
             else
             {
-                SoLuongDaiLyToiDa = 50; // Default value
+                SoLuongDaiLyToiDa = 50; 
             }
         }
 		catch(Exception ex)
@@ -153,15 +153,15 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
                 Email = Email,
                 NgayTiepNhan = NgayTiepNhan,
                 NoDaiLy = 0,
+                SoDienThoai = SoDienThoai,
                 MaLoaiDaiLy = SelectedLoaiDaiLy!.MaLoaiDaiLy,
                 MaQuan = SelectedQuan!.MaQuan
             };
 
             await _daiLyService.AddDaiLyAsync(newDaiLy);
 
-            await Shell.Current.DisplayAlert("Thành công ⭐", "Tải trang thành công", "OK");
+            await Shell.Current.DisplayAlert("Thành công ⭐", "Thêm đại lý thành công", "OK");
 
-            // Close popup after adding successfully
             await CloseWindow();
         }
         catch (Exception ex)
@@ -200,6 +200,11 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
         {
             await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
         }
+    }
+
+    public void SetCurrentPopup(Popup popup)
+    {
+        _currentPopup = popup;
     }
 
     [RelayCommand]
@@ -250,10 +255,9 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
             return false;
         }
 
-        // Check if adding this agency would exceed the maximum limit
         if (SoLuongDaiLyHienCo >= SoLuongDaiLyToiDa)
         {
-            await Shell.Current.DisplayAlert("Thông báo", "Không thể chọn thêm đại lý vào quận vì đã vượt quá số lượng tối đa", "OK");
+            await Shell.Current.DisplayAlert("Thông báo", $"Không thể chọn thêm đại lý vào quận vì đã vượt quá số lượng tối đa, số lượng đại lý hiện tại: {SoLuongDaiLyHienCo}, số lượng đại lý tối đa: {SoLuongDaiLyToiDa}", "OK");
             return false;
         }
 
