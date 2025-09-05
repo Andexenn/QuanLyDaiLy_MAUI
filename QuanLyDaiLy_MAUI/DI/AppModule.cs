@@ -47,10 +47,12 @@ public static class AppModule
         // dang ky view
         services.AddTransient<DanhSachDaiLyPage>();
         services.AddTransient<ThemDaiLyModal>();
+        services.AddTransient<LapPhieuXuatModal>();
 
         //dang ky viewmodel
         services.AddTransient<ViewModels.DaiLyViewModels.DanhSachDaiLyPageViewModel>();
         services.AddTransient<ViewModels.DaiLyViewModels.ThemDaiLyModalViewModel>();
+        services.AddTransient<ViewModels.DaiLyViewModels.LapPhieuXuatModalViewModel>();
 
         return services;
     }

@@ -15,7 +15,7 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 	private readonly IDaiLyService _daiLyService;
 	private readonly IServiceProvider _serviceProvider;
 
-    public DanhSachDaiLyPageViewModel(IDaiLyService daiLyService, IServiceProvider serviceProvider)
+    public DanhSachDaiLyPageViewModel(IDaiLyService daiLyService, IServiceProvider serviceProvider) 
 	{
 		_daiLyService = daiLyService;
 		_serviceProvider = serviceProvider;
@@ -61,6 +61,25 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
             }
 
         }
+		catch (Exception ex)
+		{
+			await Shell.Current.DisplayAlert("Error 🐞", ex.Message, "OK");
+		}
+	}
+
+	[RelayCommand]
+	private async Task LapPhieuXuatButton()
+	{
+		try
+		{
+			var lapPhieuXuatModal = _serviceProvider.GetService<LapPhieuXuatModalViewModel>();
+			var lapPhieuXuatPopup = new LapPhieuXuatModal(lapPhieuXuatModal!);
+			var mainPage = Application.Current?.MainPage;
+			if (mainPage != null)
+			{
+				await mainPage.ShowPopupAsync(lapPhieuXuatPopup!);
+			}
+		}
 		catch (Exception ex)
 		{
 			await Shell.Current.DisplayAlert("Error 🐞", ex.Message, "OK");

@@ -21,11 +21,11 @@ public class DaiLy
     public int MaQuan { get; set; }
     public virtual Quan? Quan { get; set; } = null!;
 
-    [NotMapped]
-    public string TenLoaiDaiLy => LoaiDaiLy?.TenLoaiDaiLy ?? string.Empty;
+    //[NotMapped]
+    //public string TenLoaiDaiLy => LoaiDaiLy?.TenLoaiDaiLy ?? string.Empty;
 
-    [NotMapped]
-    public string TenQuan => Quan?.TenQuan ?? string.Empty;
+    //[NotMapped]
+    //public string TenQuan => Quan?.TenQuan ?? string.Empty;
 
 
 }

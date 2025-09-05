@@ -17,7 +17,7 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
 
 
     public ThemDaiLyModalViewModel(IDaiLyService daiLyService, IQuanService quanService, ILoaiDaiLyService loaiDaiLyService, IThamSoService thamSoService)
-	{
+    {
 		_daiLyService = daiLyService;
 		_quanService = quanService;
 		_loaiDaiLyService = loaiDaiLyService;
@@ -202,10 +202,7 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
         }
     }
 
-    public void SetCurrentPopup(Popup popup)
-    {
-        _currentPopup = popup;
-    }
+    public void SetCurrentPopup(Popup popup) => _currentPopup = popup;
 
     [RelayCommand]
     private async Task CloseWindow()

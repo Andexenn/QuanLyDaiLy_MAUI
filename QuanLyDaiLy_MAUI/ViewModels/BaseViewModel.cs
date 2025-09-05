@@ -1,10 +1,19 @@
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using QuanLyDaiLy_MAUI.Views.DaiLyViews;
 
 namespace QuanLyDaiLy_MAUI.ViewModels;
 
 public partial class BaseViewModel : ObservableObject
 {
-	[ObservableProperty]
+
+    public BaseViewModel()
+    {
+    }
+
+
+    [ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(IsNotLoading))]
 	private bool isLoading = false;
 
