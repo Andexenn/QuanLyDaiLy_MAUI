@@ -31,7 +31,11 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 		IsLoading = true;
 		try
 		{
-			DaiLies = new ObservableCollection<DaiLy>(await _daiLyService.GetAllDaiLyAsync());
+			DaiLies.Clear();
+
+			var dailies = await _daiLyService.GetAllDaiLyAsync();
+
+			DaiLies = new ObservableCollection<DaiLy>(dailies);
 		}
 		catch (Exception ex)
 		{
@@ -40,7 +44,7 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 		finally
 		{
 			IsLoading = false;
-        }
+		}
 	}
 
     [RelayCommand]

@@ -13,5 +13,7 @@ public class Quan
     public int MaQuan { get; set; } // Primary Key
     public string TenQuan { get; set; } = string.Empty;
 
+    // Navigation property
+
     public virtual List<DaiLy> DaiLies { get; set; } = [];
 }

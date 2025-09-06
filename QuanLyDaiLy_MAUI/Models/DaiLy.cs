@@ -15,17 +15,15 @@ public class DaiLy
     public DateTime NgayTiepNhan { get; set; } = DateTime.Now;
     public double NoDaiLy { get; set; } = 0;
 
-    // Foreign keys 
-    public int MaLoaiDaiLy { get; set; }
+    // Navigation properties
+    public virtual List<PhieuXuat> PhieuXuats { get; set; } = [];
     public virtual LoaiDaiLy? LoaiDaiLy { get; set; } = null!;
-    public int MaQuan { get; set; }
     public virtual Quan? Quan { get; set; } = null!;
 
-    //[NotMapped]
-    //public string TenLoaiDaiLy => LoaiDaiLy?.TenLoaiDaiLy ?? string.Empty;
 
-    //[NotMapped]
-    //public string TenQuan => Quan?.TenQuan ?? string.Empty;
+    // Foreign keys 
+    public int MaLoaiDaiLy { get; set; }
+    public int MaQuan { get; set; }
 
 
 }

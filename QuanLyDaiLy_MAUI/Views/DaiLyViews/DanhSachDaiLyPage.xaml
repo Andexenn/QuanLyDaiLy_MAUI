@@ -271,7 +271,7 @@
                             <Label Style="{StaticResource SmallerTab}" Text="Tiền nợ" Grid.Column="7" />
                         </Grid>
                     </ScrollView>
-                    <ScrollView Orientation="Both" Grid.Row="1" HeightRequest="450">
+                    <ScrollView Orientation="Both" Grid.Row="1" HeightRequest="450" IsVisible="{Binding IsNotLoading}">
                         <CollectionView ItemsSource="{Binding DaiLies}">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:DaiLy">
@@ -292,7 +292,14 @@
                         </CollectionView>
 
                     </ScrollView>
-
+                    <ActivityIndicator  Grid.Row="1"
+                                        HeightRequest="50"
+                                        HorizontalOptions="Center"
+                                        IsRunning="{Binding IsLoading}"
+                                        IsVisible="{Binding IsLoading}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="50"
+                                        Color="Blue" />
                 </Grid>
             </Border>
 

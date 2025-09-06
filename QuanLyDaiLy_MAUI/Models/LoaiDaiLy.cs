@@ -15,6 +15,7 @@ public class LoaiDaiLy
     public string TenLoaiDaiLy { get; set; } = string.Empty;
     public double NoToiDa { get; set; } = 0;
 
+    // Navigation property
     public virtual List<DaiLy> DaiLies { get; set; } = [];
 
 }
