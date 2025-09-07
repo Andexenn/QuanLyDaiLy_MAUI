@@ -13,4 +13,5 @@ internal class DaiLyServiceImpl : IDaiLyService
 
     public async Task<int> AddDaiLyAsync(DaiLy daiLy) => await _daiLyRepository.AddDaiLyAsync(daiLy);
     public async Task<int> GetNextAvailableIdAsync() => await _daiLyRepository.GetNextAvailableIdAsync();
+    public async Task<DaiLy> GetDaiLyByTenAsync(string tenDaiLy) => await _daiLyRepository.GetDaiLyByTenAsync(tenDaiLy);
 }

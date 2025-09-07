@@ -9,7 +9,7 @@ public static partial class DatabaseSeeder
 	private static void SeedDaiLy(ModelBuilder modelBuilder)
 	{
 #if DEBUG
-		Debug.WriteLine("Bug at seeding DaiLy...");
+		Debug.WriteLine("Seeding DaiLy...");
 #endif
         var seedDate = new DateTime(2023, 1, 1);
         modelBuilder.Entity<DaiLy>().HasData(

@@ -54,7 +54,7 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
 	private async Task LoadDataAsync()
 	{
         NgayTiepNhan = DateTime.Now;
-        MaDaiLy = await _daiLyService.GetNextAvailableIdAsync() + 1;
+        MaDaiLy = await _daiLyService.GetNextAvailableIdAsync();
 
         _ = LoadComboBoxData();
     }

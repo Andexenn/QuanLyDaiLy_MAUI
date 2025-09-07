@@ -26,13 +26,14 @@
                 <Setter Property="Grid.Column" Value="0"/>
             </Style>
 
-            <Style TargetType="Label" x:Key="Close">
+            <Style TargetType="Button" x:Key="Close">
                 <Setter Property="FontFamily" Value="FontAwesomeSolid"/>
                 <Setter Property="TextColor" Value="Black"/>
                 <Setter Property="Text" Value="{x:Static models:FontAwesome.x}"/>
                 <Setter Property="FontSize" Value="25"/>
                 <Setter Property="Grid.Row" Value="0"/>
                 <Setter Property="Grid.Column" Value="2"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
             </Style>
 
             <Style TargetType="Button" x:Key="Button">
@@ -49,11 +50,7 @@
     <Grid Style="{StaticResource BigGrid}">
         <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto" RowSpacing="15">
             <Label Style="{StaticResource Header}"/>
-            <Label Style="{StaticResource Close}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnCloseClicked"/>
-                </Label.GestureRecognizers>
-            </Label>
+            <Button Style="{StaticResource Close}" Command="{Binding CloseWindowCommand}"/>
             <BoxView Grid.Row="2" Grid.ColumnSpan="3" HeightRequest="2" BackgroundColor="Black"/>
         </Grid>
 
@@ -66,22 +63,22 @@
                       ColumnSpacing="10">
                     <VerticalStackLayout Spacing="10" Grid.Column="0">
                         <Label Text="Mã đại lý" TextColor="Black"/>
-                        <Border>
+                        <Border StrokeShape="RoundRectangle 5">
                             <Entry TextColor="Black" Text="{Binding MaDaiLy}" IsReadOnly="True"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="10" Grid.Column="1">
                         <Label Text="Tên đại lý" TextColor="Black"/>
-                        <Border>
+                        <Border StrokeShape="RoundRectangle 5">
                             <Entry TextColor="Black" Text="{Binding TenDaiLy, Mode=TwoWay}"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="10" Grid.Column="2">
                         <Label Text="Tên loại đại lý" TextColor="Black"/>
-                        <Border>
-                            <Picker TextColor="Black" SelectedItem="{Binding SelectedLoaiDaiLy, Mode=TwoWay}"
+                        <Border StrokeShape="RoundRectangle 5">
+                            <Picker TextColor="Black" SelectedItem="{Binding SelectedLoaiDaiLy}"
                                     ItemsSource="{Binding LoaiDaiLies}" ItemDisplayBinding="{Binding TenLoaiDaiLy}">
  
                             </Picker>
@@ -90,7 +87,7 @@
 
                     <VerticalStackLayout Spacing="10" Grid.Column="3">
                         <Label Text="Tên quận" TextColor="Black"/>
-                        <Border>
+                        <Border StrokeShape="RoundRectangle 5">
                             <Picker TextColor="Black" SelectedItem="{Binding SelectedQuan, Mode=TwoWay}"
                                     ItemsSource="{Binding Quans}" ItemDisplayBinding="{Binding TenQuan}">
                             </Picker>
@@ -102,21 +99,21 @@
                 <Grid ColumnDefinitions="*, *, *" ColumnSpacing="10">
                     <VerticalStackLayout Spacing="10" Grid.Column="0">
                         <Label Text="Số điện thoại" TextColor="Black"/>
-                        <Border>
+                        <Border StrokeShape="RoundRectangle 5">
                             <Entry TextColor="Black" Text="{Binding SoDienThoai, Mode=TwoWay}"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="10" Grid.Column="1">
                         <Label Text="Email" TextColor="Black"/>
-                        <Border>
+                        <Border StrokeShape="RoundRectangle 5">
                             <Entry TextColor="Black" Text="{Binding Email, Mode=TwoWay}"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="10" Grid.Column="2">
                         <Label Text="Ngày tiếp nhận" TextColor="Black"/>
-                        <Border>
+                        <Border StrokeShape="RoundRectangle 5">
                             <DatePicker TextColor="Black" Date="{Binding NgayTiepNhan, Mode=TwoWay}"/>
                         </Border>
                     </VerticalStackLayout>
@@ -124,7 +121,7 @@
 
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Địa chỉ" TextColor="Black"/>
-                    <Border>
+                    <Border StrokeShape="RoundRectangle 5">
                         <Entry TextColor="Black" Text="{Binding DiaChi, Mode=TwoWay}"/>
                     </Border>
                 </VerticalStackLayout>

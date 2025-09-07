@@ -5,6 +5,7 @@ using QuanLyDaiLy_MAUI.Models;
 using QuanLyDaiLy_MAUI.Services;
 using QuanLyDaiLy_MAUI.ViewModels;
 using QuanLyDaiLy_MAUI.Views.DaiLyViews;
+using QuanLyDaiLy_MAUI.ViewModels.PhieuXuatViewModels;
 using System.Collections.ObjectModel;
 
 
@@ -51,7 +52,8 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
     private void LoadCommand() => _ = LoadDaiLyButton();
 
 	[RelayCommand]
-	private async Task ThemDaiLyButton()
+    [Obsolete]
+    private async Task ThemDaiLyButton()
 	{
 		try
 		{
@@ -72,12 +74,14 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 	}
 
 	[RelayCommand]
-	private async Task LapPhieuXuatButton()
+    [Obsolete]
+    private async Task LapPhieuXuatButton()
 	{
 		try
 		{
 			var lapPhieuXuatModal = _serviceProvider.GetService<LapPhieuXuatModalViewModel>();
 			var lapPhieuXuatPopup = new LapPhieuXuatModal(lapPhieuXuatModal!);
+
 			var mainPage = Application.Current?.MainPage;
 			if (mainPage != null)
 			{

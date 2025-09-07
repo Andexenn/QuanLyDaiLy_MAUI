@@ -7,8 +7,8 @@ public class PhieuXuat
 	[Key]
 	public int MaPhieuXuat { get; set; }  
 	
-	public DateTime NgayLap { get; set; } = DateTime.Now;
-	public double TongGiaTri { get; set; } = 0;
+	public DateTime NgayLapPhieu { get; set; } = DateTime.Now;
+	public double TongTriGia { get; set; } = 0;
 
     // navigation property
     public List<CTPhieuXuat> CTPhieuXuats { get; set; } = [];

@@ -9,7 +9,7 @@ public static partial class DatabaseSeeder
     private static void SeedQuan(ModelBuilder modelBuilder)
     {
 #if DEBUG 
-        Debug.WriteLine("Bug at seeding Quan data...");
+        Debug.WriteLine("Seeding Quan data...");
 #endif
         modelBuilder.Entity<Quan>().HasData(
             new Quan { MaQuan = 1, TenQuan = "Quận 1" },

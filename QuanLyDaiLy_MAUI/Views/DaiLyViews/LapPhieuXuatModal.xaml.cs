@@ -1,5 +1,5 @@
 using CommunityToolkit.Maui.Views;
-using QuanLyDaiLy_MAUI.ViewModels.DaiLyViewModels;
+using QuanLyDaiLy_MAUI.ViewModels.PhieuXuatViewModels;
 
 namespace QuanLyDaiLy_MAUI.Views.DaiLyViews;
 
@@ -8,7 +8,7 @@ public partial class LapPhieuXuatModal : Popup
 	public LapPhieuXuatModal(LapPhieuXuatModalViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext = vm;
+		this.BindingContext = vm;
 		vm.SetCurrentPopup(this);
 
 	}

@@ -67,9 +67,6 @@ public class DataContext : DbContext
             .HasForeignKey(mh => mh.MaDonViTinh)
             .OnDelete(DeleteBehavior.Cascade);
 
-
-
-
         DatabaseSeeder.SeedData(modelBuilder);
     }
 

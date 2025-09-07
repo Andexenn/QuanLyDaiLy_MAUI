@@ -23,9 +23,15 @@ public class DaiLyRepository : IDaiLyRepository
 
     public async Task<int> GetNextAvailableIdAsync()
     {
-        return await _dataContext.DaiLies.MaxAsync(d => (int?)d.MaDaiLy) ?? 0 + 1;
+        return await _dataContext.DaiLies.MaxAsync(d => ((int?)d.MaDaiLy) ?? 0) + 1;
     }
 
+
+    public async Task<DaiLy> GetDaiLyByTenAsync(string tenDaiLy)
+    {
+        var daily = await _dataContext.DaiLies.FirstOrDefaultAsync(d => d.TenDaiLy == tenDaiLy);
+        return daily ?? throw new Exception("Bug at GetDaiLyByTenAsync");
+    }
 
 
 }
