@@ -1,6 +1,7 @@
 using QuanLyDaiLy_MAUI.Interfaces;
 using QuanLyDaiLy_MAUI.Data;
 using Microsoft.EntityFrameworkCore;
+using QuanLyDaiLy_MAUI.Models;
 namespace QuanLyDaiLy_MAUI.Repositories;
 
 public class PhieuXuatRepository : IPhieuXuatRepository
@@ -12,5 +13,11 @@ public class PhieuXuatRepository : IPhieuXuatRepository
 	{
 		//return 1;
 		return await _dataContext.PhieuXuats.MaxAsync(px => ((int?)px.MaPhieuXuat) ?? 0) + 1;
+    }
+
+	public async Task<int> AddPhieuXuatAsync(PhieuXuat phieuXuat)
+	{
+		await _dataContext.PhieuXuats.AddAsync(phieuXuat);
+		return await _dataContext.SaveChangesAsync();
     }
 }

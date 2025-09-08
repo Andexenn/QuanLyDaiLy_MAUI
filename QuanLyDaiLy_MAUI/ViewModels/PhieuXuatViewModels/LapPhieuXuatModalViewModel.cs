@@ -1,4 +1,4 @@
-using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuanLyDaiLy_MAUI.Services;
@@ -7,6 +7,7 @@ using QuanLyDaiLy_MAUI.Models;
 using System.Diagnostics.Metrics;
 
 namespace QuanLyDaiLy_MAUI.ViewModels.PhieuXuatViewModels;
+
 public partial class LapPhieuXuatModalViewModel : BaseViewModel
 {
     private readonly IDaiLyService _daiLyService;
@@ -39,19 +40,56 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
     [ObservableProperty]
     DaiLy? selectedDaiLy;
     [ObservableProperty]
-    double noDaiLy = 0;
-    [ObservableProperty]
-    double noToiDa = 0;
-    [ObservableProperty]
     ObservableCollection<MatHang> matHangs = [];
     [ObservableProperty]
     MatHang? selectedMatHang1;
+    [ObservableProperty]
+    MatHang? selectedMatHang2;
+    [ObservableProperty]
+    MatHang? selectedMatHang3;
+    [ObservableProperty]
+    MatHang? selectedMatHang4;
+    [ObservableProperty]
+    ObservableCollection<(int SoLuongXuat, double DonGiaXuat)> soLuongDonGiaXuats = [];
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(GiaXuat1))]
+    [NotifyPropertyChangedFor(nameof(TongTien))]
+    int soLuongXuat1;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(GiaXuat1))]
+    [NotifyPropertyChangedFor(nameof(TongTien))]
+    double donGiaXuat1;
+    public double GiaXuat1 => SoLuongXuat1 * DonGiaXuat1;
+    public double TongTien => GiaXuat1;
+
+    partial void OnSoLuongXuat1Changed(int oldValue, int newValue)
+    {
+        if(newValue < 0)
+        {
+            Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được âm.", "OK");
+            SoLuongXuat1 = 0;
+        }
+        else if(newValue > SelectedMatHang1?.SoLuongTon)
+        {
+            Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được nhiều hơn số lượng tồn", "OK");
+            SoLuongXuat1 = 0;
+        }
+    }
+
+    partial void OnDonGiaXuat1Changed(double oldValue, double newValue)
+    {
+        if(newValue < 0)
+        {
+            Shell.Current.DisplayAlert("Lỗi", "Đơn giá xuất không được âm.", "OK");
+            DonGiaXuat1 = 0;
+        }
+    }
 
     private async Task LoadDataAsync()
     {
         MaPhieuXuat = await _phieuXuatService.GetNextAvailableIdAsync();
         NgayLapPhieu = DateTime.Now;
-        
+
         _ = LoadComboBoxData();
     }
 
@@ -75,52 +113,50 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
         }
     }
 
-    private async Task UpdateNo()
+    [RelayCommand]
+    async Task LapPhieuXuat()
     {
-        if (SelectedDaiLy != null)
+        try
         {
-            try
-            {
-                //var daily = await _daiLyService.GetDaiLyByTenAsync(SelectedDaiLy.TenDaiLy);
-                //NoDaiLy = daily.NoDaiLy;
-                NoDaiLy = SelectedDaiLy.NoDaiLy;
-                NoToiDa = (SelectedDaiLy.MaLoaiDaiLy == 1 ? 200000 : 50);
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
-            }
+            IsLoading = true;
+            if (!await ValidateInput())
+                return;
+
+            var phieuXuat = new PhieuXuat 
+            { 
+                MaPhieuXuat = MaPhieuXuat,
+                NgayLapPhieu = NgayLapPhieu,
+                MaDaiLy = SelectedDaiLy!.MaDaiLy,
+                TongTriGia = TongTien
+            };
+
+            await _phieuXuatService.AddPhieuXuatAsync(phieuXuat);
+            await Shell.Current.DisplayAlert("Thành công ⭐", "Lập phiếu xuất thành công", "OK");
         }
-        else
-            NoDaiLy = NoToiDa = 0;
-
-    }
-
-    partial void OnSelectedDaiLyChanged(DaiLy? oldValue, DaiLy? newValue)
-    {
-        _ = UpdateNo();
-    }
-
-    private async Task UpdateMatHang()
-    {
-        if(SelectedMatHang1 != null)
+        catch (Exception ex)
         {
-            try
-            {
-
-            }
-            catch(Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
-            }
-
+            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
         }
+        finally
+        {
+            IsLoading = false;
+        }
+
     }
 
-    partial void OnSelectedMatHang1Changed(MatHang? oldValue, MatHang? newValue)
+    async Task<bool> ValidateInput()
     {
-        _ = UpdateMatHang();
-        // Handle any additional logic when SelectedMatHang1 changes, if necessary
+        if(SelectedDaiLy == null)
+        {
+            await Shell.Current.DisplayAlert("Lỗi", "Vui lòng chọn đại lý.", "OK");
+            return false;
+        }
+        else if(SelectedMatHang1 == null && SoLuongXuat1 > 0)
+        {
+            await Shell.Current.DisplayAlert("Lỗi", "Vui lòng chọn mặt hàng 1.", "OK");
+            return false;
+        }
+        return true;
     }
 
     public void SetCurrentPopup(Popup popup) => _currentPopup = popup;
