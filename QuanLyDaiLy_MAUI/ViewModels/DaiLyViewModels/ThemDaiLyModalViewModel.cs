@@ -162,6 +162,7 @@ public partial class ThemDaiLyModalViewModel : BaseViewModel
 
             await Shell.Current.DisplayAlert("Thành công ⭐", "Thêm đại lý thành công", "OK");
 
+            
             await CloseWindow();
         }
         catch (Exception ex)

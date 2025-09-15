@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using QuanLyDaiLy_MAUI.DI;
 using QuanLyDaiLy_MAUI.Services;
+using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace QuanLyDaiLy_MAUI
 {
@@ -12,6 +13,7 @@ namespace QuanLyDaiLy_MAUI
 #pragma warning disable MCT001 // `.UseMauiCommunityToolkit()` Not Found on MauiAppBuilder
             builder
                 .UseMauiApp<App>()
+                //.ConfigureSyncfusionToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

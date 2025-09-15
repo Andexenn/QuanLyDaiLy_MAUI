@@ -67,8 +67,8 @@
             <BoxView HeightRequest="2" Color="Black"/>
         </VerticalStackLayout>
 
-        <VerticalStackLayout Grid.Row="1" Spacing="15">
-            <Border StrokeShape="RoundRectangle 10" BackgroundColor="#f7f9fd" Padding="10">
+        <VerticalStackLayout Grid.Row="1" Spacing="15" >
+            <Border StrokeShape="RoundRectangle 10" BackgroundColor="#f7f9fd" Padding="10" >
                 <Grid RowDefinitions="Auto, Auto" RowSpacing="15">
             
 
@@ -129,37 +129,37 @@
                                         <Label Style="{StaticResource input}" Text="ĐƠN GIÁ XUẤT" Grid.Column="5"/>
                                         <Label Style="{StaticResource input}" Text="THÀNH TIỀN" Grid.Column="6"/>
                                     </Grid>
-                                    <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="7"/>
-                                    
+                                    <BoxView HeightRequest="2"/>
                                 </VerticalStackLayout>
                             </ScrollView>
-                            <ScrollView Grid.Row="1" Orientation="Both" >
-                                <VerticalStackLayout Grid.Row="1" >
-                                    <Grid ColumnDefinitions="*, *, *, *, *, *, *" ColumnSpacing="20" RowDefinitions="*,*" Padding="10,15,10,0" RowSpacing="15">
-                                        <Label Style="{StaticResource content}" Text="1" Grid.Column="0"/>
-                                        <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                                            <Picker ItemsSource="{Binding MatHangs}" ItemDisplayBinding="{Binding TenMatHang}" SelectedItem="{Binding SelectedMatHang1, Mode=TwoWay}" HorizontalOptions="Center"  TextColor="Black"/>
-                                        </Border>
-                                        <Border Grid.Column="2" StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                                            <Label Style="{StaticResource content}" Text="{Binding SelectedMatHang1.MaDonViTinh, Converter={StaticResource MaDonViTinhToTenDonViTinhConverter}, Mode=OneWay}" HorizontalOptions="Center"/>
-                                        </Border>
-                                        <Border Grid.Column="3" StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                                            <Label Style="{StaticResource content}" Text="{Binding SelectedMatHang1.SoLuongTon}" HorizontalOptions="Center"/>
-                                        </Border>
-                                        <Border Grid.Column="4" StrokeShape="RoundRectangle 10">
-                                            <Entry HorizontalOptions="Center" Text="{Binding SoLuongXuat1, Mode=TwoWay, UpdateSourceEventName=TextChanged}" TextColor="Black"/>
-                                        </Border>
-                                        <Border Grid.Column="5" StrokeShape="RoundRectangle 10">
-                                            <Entry HorizontalOptions="Center" Text="{Binding DonGiaXuat1, Mode=TwoWay, UpdateSourceEventName=TextChanged}" TextColor="Black"/>
-                                        </Border>
-                                        <Border Grid.Column="6" StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                                            <Label Style="{StaticResource content}" Text="{Binding GiaXuat1}" HorizontalOptions="Center" TextColor="Black"/>
-                                        </Border>
-                                    </Grid>
-                                    <!--<BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="7"/>-->
-                                    
-                                </VerticalStackLayout>
+                            <ScrollView Grid.Row="1" Orientation="Both" HeightRequest="200" IsVisible="{Binding IsNotLoading}">
+                                <CollectionView ItemsSource="{Binding MatHangXuats}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="viewmodels:MatHangXuat">
+                                            <VerticalStackLayout>
+                                                <Grid  ColumnDefinitions="*, *, *, *, *, *, *" ColumnSpacing="20" Padding="10,5,10,0">
+                                                    <Label Style="{StaticResource input}" Text="{Binding SoThuTu}" Grid.Column="0" />
+                                                    <Picker BackgroundColor="#f7f9fd" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" TextColor="Black" SelectedItem="{Binding MatHang, Mode=TwoWay}" ItemsSource="{Binding x:DataType='viewmodels:LapPhieuXuatModalViewModel', Source={RelativeSource AncestorType={x:Type viewmodels:LapPhieuXuatModalViewModel}}, Path=MatHangs}" ItemDisplayBinding="{Binding TenMatHang}" />
+                                                    <Label Style="{StaticResource input}" Text="{Binding MatHang.MaDonViTinh, Converter={converters:MaDonViTinhToTenDonViTinhConverter}}"  Grid.Column="2"/>
+                                                    <Label Style="{StaticResource input}" Text="{Binding MatHang.SoLuongTon}" Grid.Column="3"/>
+                                                    <Entry HorizontalOptions="Center" Text="{Binding SoLuongXuat, Mode=TwoWay}" TextColor="Black" Grid.Column="4"/>
+                                                    <Entry HorizontalOptions="Center" Text="{Binding DonGiaXuat, Mode=TwoWay}" TextColor="Black" Grid.Column="5"/>
+                                                    <Label Style="{StaticResource input}" Text="{Binding GiaXuat}" Grid.Column="6"/>
+                                                </Grid>
+                                                <BoxView HeightRequest="2"/>
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
                             </ScrollView>
+                            <ActivityIndicator Grid.Row="1"
+                                                HeightRequest="50"
+                                                HorizontalOptions="Center"
+                                                IsRunning="{Binding IsLoading}"
+                                                IsVisible="{Binding IsLoading}"
+                                                VerticalOptions="Center"
+                                                WidthRequest="50"
+                                                Color="Blue" />
                         </Grid>
                     </Border>
                 </Grid>

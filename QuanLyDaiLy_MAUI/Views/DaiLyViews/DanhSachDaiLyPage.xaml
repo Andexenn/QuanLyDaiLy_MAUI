@@ -4,11 +4,14 @@
              x:Class="QuanLyDaiLy_MAUI.Views.DaiLyViews.DanhSachDaiLyPage"
              xmlns:models="clr-namespace:QuanLyDaiLy_MAUI.Models"
              xmlns:viewmodels="clr-namespace:QuanLyDaiLy_MAUI.ViewModels.DaiLyViewModels"
+             xmlns:converters="clr-namespace:QuanLyDaiLy_MAUI.Converters"
              x:DataType="viewmodels:DanhSachDaiLyPageViewModel"
              Shell.NavBarIsVisible="False">
+             <!--xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"-->
     
     <ContentPage.Resources>
         <ResourceDictionary>
+            <converters:PageNumberToVisibleConverter x:Key="PageNumberToVisibleConverter"/>
             <Style TargetType="Border" x:Key="Nav">
                 <Setter Property="StrokeThickness" Value="0"/>
                 <Setter Property="Grid.ColumnSpan" Value="2"/>
@@ -272,13 +275,29 @@
                         </Grid>
                     </ScrollView>
                     <ScrollView Orientation="Both" Grid.Row="1" HeightRequest="450" IsVisible="{Binding IsNotLoading}">
-                        <CollectionView ItemsSource="{Binding DaiLies}">
+                        <CollectionView ItemsSource="{Binding DisplayDaiLies}"
+                                        Header="{Binding .}">
+                            <!--CollectionView.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*, *, *, *, *, *, *, *" BackgroundColor="#ebeef7" Padding="0,5,0,5">
+                                        <Label Style="{StaticResource SmallerTab}" Text="Mã đại lý"  />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Tên đại lý" Grid.Column="1" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Địa chỉ" Grid.Column="2" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Quận" Grid.Column="3" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Loại đại lý" Grid.Column="4" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Điện thoại" Grid.Column="5" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Ngày tiếp nhận" Grid.Column="6" />
+                                        <Label Style="{StaticResource SmallerTab}" Text="Tiền nợ" Grid.Column="7" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.HeaderTemplate-->
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:DaiLy">
                                     <Grid ColumnDefinitions="*, *, *, *, *, *, *, *" RowDefinitions="Auto, Auto" VerticalOptions="Start" RowSpacing="10" Padding="0, 5, 0,0">
                                         <Label Style="{StaticResource Data}" Text="{Binding MaDaiLy}" />
                                         <Label Style="{StaticResource Data}" Text="{Binding TenDaiLy}" Grid.Column="1" />
-                                        <Label Style="{StaticResource Data}" Text="{Binding DiaChi}" Grid.Column="2" />
+                                        <Label Style="{StaticResource Data}" Text="{Binding DiaChi}" Grid.Column="2" LineBreakMode="TailTruncation"/>
                                         <Label Style="{StaticResource Data}" Text="{Binding Quan.TenQuan}" Grid.Column="3" />
                                         <Label Style="{StaticResource Data}" Text="{Binding MaLoaiDaiLy}" Grid.Column="4" />
                                         <Label Style="{StaticResource Data}" Text="{Binding SoDienThoai}" Grid.Column="5" />
@@ -308,6 +327,9 @@
                 <Border Grid.Column="1" StrokeThickness="0">
                     <HorizontalStackLayout Spacing="20">
                         <Border Padding="10" StrokeShape="RoundRectangle 10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BeforeButtonCommand}"/>
+                            </Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="15">
                                 <Label FontFamily="FontAwesomeSolid"
                                        FontSize="20"
@@ -320,29 +342,24 @@
 
                         <Border StrokeShape="RoundRectangle 10">
                             <HorizontalStackLayout>
-                                <Border StrokeThickness="0" BackgroundColor="#0eaafd" Padding="10">
-                                    <Label Text="1" VerticalOptions="Center"/>
+                                <Border StrokeThickness="0" Padding="10" IsVisible="{Binding BeforePage, Converter={StaticResource PageNumberToVisibleConverter}}">
+                                    <Label Text="{Binding BeforePage}" VerticalOptions="Center" TextColor="Black" />
                                 </Border>
 
-                                <Border StrokeThickness="0" Padding="10">
-                                    <Label Text="2" VerticalOptions="Center" TextColor="Black"/>
+                                <Border StrokeThickness="0" Padding="10" BackgroundColor="#0eaafd">
+                                    <Label Text="{Binding CurrentPage}" VerticalOptions="Center" TextColor="Black"/>
                                 </Border>
 
-                                <Border StrokeThickness="0" Padding="10">
-                                    <Label Text="3" VerticalOptions="Center" TextColor="Black"/>
-                                </Border>
-
-                                <Border StrokeThickness="0" Padding="10">
-                                    <Label Text="4" VerticalOptions="Center" TextColor="Black"/>
-                                </Border>
-
-                                <Border StrokeThickness="0" Padding="10">
-                                    <Label Text="5" VerticalOptions="Center" TextColor="Black"/>
+                                <Border StrokeThickness="0" Padding="10" IsVisible="{Binding NextPage, Converter={StaticResource PageNumberToVisibleConverter}}">
+                                    <Label Text="{Binding NextPage}" VerticalOptions="Center" TextColor="Black"/>
                                 </Border>
                             </HorizontalStackLayout>
                         </Border>
 
                         <Border Padding="5, 0, 5,0" StrokeShape="RoundRectangle 10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NextButtonCommand}"/>
+                            </Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="15">
                                 <Label FontFamily="FontAwesomeSolid"
                                        FontSize="20"
@@ -352,6 +369,25 @@
                                 <Label Text="Trang sau" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
                             </HorizontalStackLayout>
                         </Border>
+                        <!--buttons:SfButton Background="White"
+                                          CornerRadius="10"
+                                          Stroke="Grey"
+                                          Padding="5,0,5,0"
+                                          StrokeThickness="3"
+                                          Command="{Binding NextButtonCommand}">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="15" Padding="5,0,5,0">
+                                        <Label FontFamily="FontAwesomeSolid"
+                                               FontSize="20"
+                                               TextColor="Black"
+                                               Text="{x:Static models:FontAwesome.DiamondTurnRight}"
+                                               VerticalOptions="Center"/>
+                                        <Label Text="Trang sau" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton-->
                     </HorizontalStackLayout>
                 </Border>
             </Grid>

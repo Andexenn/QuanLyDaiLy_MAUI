@@ -8,6 +8,54 @@ using System.Diagnostics.Metrics;
 
 namespace QuanLyDaiLy_MAUI.ViewModels.PhieuXuatViewModels;
 
+public partial class MatHangXuat : ObservableObject
+{
+    [ObservableProperty]
+    int soThuTu;
+    [ObservableProperty]
+    private MatHang matHang;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(GiaXuat))]
+    private int soLuongXuat;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(GiaXuat))]
+    private double donGiaXuat;
+
+    public double GiaXuat => SoLuongXuat * DonGiaXuat;
+
+    public MatHangXuat(int soThuTu = 1, MatHang matHang = null!, int soLuongXuat = 0, double donGiaXuat = 0)
+    {
+        this.MatHang = matHang;
+        SoLuongXuat = soLuongXuat;
+        DonGiaXuat = donGiaXuat;
+        SoThuTu = soThuTu;
+    }
+    partial void OnSoLuongXuatChanged(int oldValue, int newValue)
+    {
+        if (newValue < 0)
+        {
+            Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được âm.", "OK");
+            SoLuongXuat = 0;
+        }
+        //else if (newValue > SelectedMatHang1?.SoLuongTon)
+        //{
+        //    Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được nhiều hơn số lượng tồn", "OK");
+        //    SoLuongXuat1 = 0;
+        //}
+    }
+
+    partial void OnDonGiaXuatChanged(double oldValue, double newValue)
+    {
+        if (newValue < 0)
+        {
+            Shell.Current.DisplayAlert("Lỗi", "Đơn giá xuất không được âm.", "OK");
+            DonGiaXuat = 0;
+        }
+    }
+}
+
 public partial class LapPhieuXuatModalViewModel : BaseViewModel
 {
     private readonly IDaiLyService _daiLyService;
@@ -19,8 +67,29 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
 
     private Popup? _currentPopup;
 
+    [ObservableProperty]
+    private int maPhieuXuat;
+
+    [ObservableProperty]
+    private DateTime ngayLapPhieu = DateTime.Now;
+
+    [ObservableProperty]
+    private ObservableCollection<DaiLy> daiLies = [];
+
+    [ObservableProperty]
+    private DaiLy? selectedDaiLy;
+
+    [ObservableProperty]
+    private ObservableCollection<MatHang> matHangs = [];
+
+    [ObservableProperty]
+    public double tongTien;
+
+    [ObservableProperty]
+    private ObservableCollection<MatHangXuat> matHangXuats = [];
+
     public LapPhieuXuatModalViewModel(IDaiLyService daiLyService, IPhieuXuatService phieuXuatService, ILoaiDaiLyService loaiDaiLyService, IQuanService quanService, IThamSoService thamSoService, IMatHangService matHangService)
-    {	
+    {
         _daiLyService = daiLyService;
         _phieuXuatService = phieuXuatService;
         _loaiDaiLyService = loaiDaiLyService;
@@ -28,61 +97,41 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
         _thamSoService = thamSoService;
         _matHangService = matHangService;
 
+        MatHangXuats.CollectionChanged += MatHangXuats_CollectionChanged;
+
         _ = LoadDataAsync();
     }
 
-    [ObservableProperty]
-    int maPhieuXuat;
-    [ObservableProperty]
-    DateTime ngayLapPhieu = DateTime.Now;
-    [ObservableProperty]
-    ObservableCollection<DaiLy> daiLies = [];
-    [ObservableProperty]
-    DaiLy? selectedDaiLy;
-    [ObservableProperty]
-    ObservableCollection<MatHang> matHangs = [];
-    [ObservableProperty]
-    MatHang? selectedMatHang1;
-    [ObservableProperty]
-    MatHang? selectedMatHang2;
-    [ObservableProperty]
-    MatHang? selectedMatHang3;
-    [ObservableProperty]
-    MatHang? selectedMatHang4;
-    [ObservableProperty]
-    ObservableCollection<(int SoLuongXuat, double DonGiaXuat)> soLuongDonGiaXuats = [];
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(GiaXuat1))]
-    [NotifyPropertyChangedFor(nameof(TongTien))]
-    int soLuongXuat1;
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(GiaXuat1))]
-    [NotifyPropertyChangedFor(nameof(TongTien))]
-    double donGiaXuat1;
-    public double GiaXuat1 => SoLuongXuat1 * DonGiaXuat1;
-    public double TongTien => GiaXuat1;
-
-    partial void OnSoLuongXuat1Changed(int oldValue, int newValue)
+    private void MatHangXuats_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        if(newValue < 0)
+        if (e.NewItems != null)
         {
-            Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được âm.", "OK");
-            SoLuongXuat1 = 0;
+            foreach (MatHangXuat newItem in e.NewItems)
+            {
+                newItem.PropertyChanged += MatHangXuat_PropertyChanged;
+            }
         }
-        else if(newValue > SelectedMatHang1?.SoLuongTon)
+        if (e.OldItems != null)
         {
-            Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được nhiều hơn số lượng tồn", "OK");
-            SoLuongXuat1 = 0;
+            foreach (MatHangXuat oldItem in e.OldItems)
+            {
+                oldItem.PropertyChanged -= MatHangXuat_PropertyChanged;
+            }
+        }
+        CalTongTien();
+    }
+
+    private void MatHangXuat_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MatHangXuat.GiaXuat))
+        {
+            CalTongTien();
         }
     }
 
-    partial void OnDonGiaXuat1Changed(double oldValue, double newValue)
+    private void CalTongTien()
     {
-        if(newValue < 0)
-        {
-            Shell.Current.DisplayAlert("Lỗi", "Đơn giá xuất không được âm.", "OK");
-            DonGiaXuat1 = 0;
-        }
+        TongTien = MatHangXuats.Sum(mh => mh.GiaXuat);
     }
 
     private async Task LoadDataAsync()
@@ -90,7 +139,30 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
         MaPhieuXuat = await _phieuXuatService.GetNextAvailableIdAsync();
         NgayLapPhieu = DateTime.Now;
 
-        _ = LoadComboBoxData();
+        IsLoading = true;
+        await Task.Yield();
+        try
+        {
+            await Task.Run(async () =>
+            {
+                await LoadComboBoxData();
+
+                MatHangXuats.Clear();
+
+            });
+            for (int i = 0; i < MatHangs.Count; ++i)
+                MatHangXuats.Add(new MatHangXuat(i + 1));
+        }
+        catch(Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+        }
+        finally
+        {
+            IsLoading = false;
+            await Task.Yield();
+        }
+
     }
 
     private async Task LoadComboBoxData()
@@ -132,6 +204,7 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
 
             await _phieuXuatService.AddPhieuXuatAsync(phieuXuat);
             await Shell.Current.DisplayAlert("Thành công ⭐", "Lập phiếu xuất thành công", "OK");
+            await CloseWindow();
         }
         catch (Exception ex)
         {
@@ -151,9 +224,14 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Lỗi", "Vui lòng chọn đại lý.", "OK");
             return false;
         }
-        else if(SelectedMatHang1 == null && SoLuongXuat1 > 0)
+        else if (MatHangXuats[0].MatHang == null && MatHangXuats[0].SoLuongXuat > 0)
         {
             await Shell.Current.DisplayAlert("Lỗi", "Vui lòng chọn mặt hàng 1.", "OK");
+            return false;
+        }
+        else if (MatHangXuats[0].SoLuongXuat == 0 || MatHangXuats[0].DonGiaXuat == 0)
+        {
+            await Shell.Current.DisplayAlert("Lỗi", "Vui lòng điền số khác 0", "OK");
             return false;
         }
         return true;

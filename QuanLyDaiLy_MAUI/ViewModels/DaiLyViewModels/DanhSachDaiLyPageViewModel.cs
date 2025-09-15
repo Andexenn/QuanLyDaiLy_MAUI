@@ -26,18 +26,36 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 
 	[ObservableProperty]
 	private ObservableCollection<DaiLy> daiLies = [];
+	[ObservableProperty]
+	//[NotifyPropertyChangedFor(nameof(BeforePage))]
+	//[NotifyPropertyChangedFor(nameof(NextPage))]
+	private int currentPage = 1;
+	[ObservableProperty]
+	private int beforePage = 0;
+	[ObservableProperty]
+	private int nextPage = 2;
+	[ObservableProperty]
+	private ObservableCollection<DaiLy> displayDaiLies = [];
 
-	public async Task LoadDaiLyAsync()
+    public async Task LoadDaiLyAsync()
 	{
 		IsLoading = true;
+		await Task.Yield();
 		try
 		{
-			DaiLies.Clear();
+            await Task.Run(async () =>
+            {
+                var dailies = await _daiLyService.GetAllDaiLyAsync();
 
-			var dailies = await _daiLyService.GetAllDaiLyAsync();
+                // Update the collection on the UI thread
+				DaiLies = new ObservableCollection<DaiLy>(dailies);
+				DisplayDaiLies = new ObservableCollection<DaiLy>(DaiLies.Skip((CurrentPage - 1) * 20).Take(20));
+                //MainThread.BeginInvokeOnMainThread(() =>
+                //{
+                //});
+            });
 
-			DaiLies = new ObservableCollection<DaiLy>(dailies);
-		}
+        }
 		catch (Exception ex)
 		{
 			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
@@ -45,7 +63,8 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 		finally
 		{
 			IsLoading = false;
-		}
+			await Task.Yield();
+        }
 	}
 
     [RelayCommand]
@@ -64,6 +83,7 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 			if(mainPage != null)
 			{
 				await mainPage.ShowPopupAsync(themDaiLyPopup!);
+				//await 
             }
 
         }
@@ -100,4 +120,48 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 		await LoadDaiLyAsync();
 		await Shell.Current.DisplayAlert("Thành công ⭐", "Tải trang thành công", "OK");
     }
+
+	[RelayCommand]
+	private async Task NextButton()
+	{
+		try
+		{
+			if (CurrentPage == Math.Ceiling((double)DaiLies.Count / 20) - 1)
+				NextPage = -1;
+			if (CurrentPage == Math.Ceiling((double)DaiLies.Count / 20))
+			{
+				NextPage = 0;
+                DisplayDaiLies = new ObservableCollection<DaiLy>(DaiLies.Skip((CurrentPage - 1) * 20).Take(20));
+                return;
+			}
+			CurrentPage++;
+			BeforePage++;
+			NextPage++;
+			DisplayDaiLies = new ObservableCollection<DaiLy>( DaiLies.Skip((CurrentPage - 1) * 20).Take(20));
+		}
+		catch (Exception ex)
+		{
+			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+		}
+	}
+
+	[RelayCommand]
+	private async Task BeforeButton()
+	{
+		try
+		{
+			if (CurrentPage == 1)
+				return;
+			if(NextPage == 0)
+				NextPage = CurrentPage + 1;
+            CurrentPage--;
+			BeforePage--;
+			NextPage--;
+            DisplayDaiLies = new ObservableCollection<DaiLy>(DaiLies.Skip((CurrentPage - 1) * 20).Take(20));
+        }
+		catch (Exception ex)
+		{
+			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+		}
+	}
 }
