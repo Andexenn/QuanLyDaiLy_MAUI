@@ -6,8 +6,8 @@
              xmlns:viewmodels="clr-namespace:QuanLyDaiLy_MAUI.ViewModels.DaiLyViewModels"
              xmlns:converters="clr-namespace:QuanLyDaiLy_MAUI.Converters"
              x:DataType="viewmodels:DanhSachDaiLyPageViewModel"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"
              Shell.NavBarIsVisible="False">
-             <!--xmlns:buttons="clr-namespace:Syncfusion.Maui.Toolkit.Buttons;assembly=Syncfusion.Maui.Toolkit"-->
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -356,7 +356,7 @@
                             </HorizontalStackLayout>
                         </Border>
 
-                        <Border Padding="5, 0, 5,0" StrokeShape="RoundRectangle 10">
+                        <!--<Border Padding="5, 0, 5,0" StrokeShape="RoundRectangle 10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding NextButtonCommand}"/>
                             </Border.GestureRecognizers>
@@ -368,8 +368,8 @@
                                        VerticalOptions="Center"/>
                                 <Label Text="Trang sau" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
                             </HorizontalStackLayout>
-                        </Border>
-                        <!--buttons:SfButton Background="White"
+                        </Border>-->
+                        <buttons:SfButton Background="White"
                                           CornerRadius="10"
                                           Stroke="Grey"
                                           Padding="5,0,5,0"
@@ -387,7 +387,7 @@
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </buttons:SfButton.Content>
-                        </buttons:SfButton-->
+                        </buttons:SfButton>
                     </HorizontalStackLayout>
                 </Border>
             </Grid>

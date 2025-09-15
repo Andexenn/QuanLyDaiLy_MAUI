@@ -169,7 +169,7 @@
 
         <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="20">
             <Button Text="Lập Phiếu xuất" Style="{StaticResource button}" Command="{Binding LapPhieuXuatCommand}"/>
-            <Button Text="Phiếu xuất mới" Style="{StaticResource button}"/>
+            <Button Text="Phiếu xuất mới" Style="{StaticResource button}" Command="{Binding NewPhieuXuatCommand}"/>
             <Button Text="Tìm phiếu xuất" Style="{StaticResource button}"/>
             <Button Text="Xoá phiếu xuất" Style="{StaticResource button}"/>
             <Button Text="Cập nhật phiếu xuất" Style="{StaticResource button}"/>

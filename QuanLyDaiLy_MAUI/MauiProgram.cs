@@ -13,7 +13,7 @@ namespace QuanLyDaiLy_MAUI
 #pragma warning disable MCT001 // `.UseMauiCommunityToolkit()` Not Found on MauiAppBuilder
             builder
                 .UseMauiApp<App>()
-                //.ConfigureSyncfusionToolkit()
+                .ConfigureSyncfusionToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

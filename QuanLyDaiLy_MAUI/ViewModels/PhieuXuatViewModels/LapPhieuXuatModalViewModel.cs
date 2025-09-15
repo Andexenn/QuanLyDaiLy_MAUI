@@ -39,11 +39,11 @@ public partial class MatHangXuat : ObservableObject
             Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được âm.", "OK");
             SoLuongXuat = 0;
         }
-        //else if (newValue > SelectedMatHang1?.SoLuongTon)
-        //{
-        //    Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được nhiều hơn số lượng tồn", "OK");
-        //    SoLuongXuat1 = 0;
-        //}
+        else if (newValue > MatHang?.SoLuongTon)
+        {
+            Shell.Current.DisplayAlert("Lỗi", "Số lượng xuất không được nhiều hơn số lượng tồn", "OK");
+            SoLuongXuat = 0;
+        }
     }
 
     partial void OnDonGiaXuatChanged(double oldValue, double newValue)
@@ -203,8 +203,9 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             };
 
             await _phieuXuatService.AddPhieuXuatAsync(phieuXuat);
+            UpdateSoLuongTonVaNoDaiLy();
             await Shell.Current.DisplayAlert("Thành công ⭐", "Lập phiếu xuất thành công", "OK");
-            await CloseWindow();
+            //await CloseWindow();
         }
         catch (Exception ex)
         {
@@ -215,6 +216,14 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             IsLoading = false;
         }
 
+    }
+
+    void UpdateSoLuongTonVaNoDaiLy()
+    {
+        foreach(var mhx in MatHangXuats)
+            mhx.MatHang.SoLuongTon -= mhx.SoLuongXuat;
+        
+        SelectedDaiLy!.NoDaiLy += TongTien;
     }
 
     async Task<bool> ValidateInput()
@@ -234,6 +243,11 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Lỗi", "Vui lòng điền số khác 0", "OK");
             return false;
         }
+        else if(SelectedDaiLy.NoDaiLy + TongTien > (SelectedDaiLy.LoaiDaiLy?.NoToiDa ?? 0))
+        {
+            await Shell.Current.DisplayAlert("Lỗi", "Tổng nợ đại lý vượt quá hạn mức cho phép.", "OK");
+            return false;
+        }
         return true;
     }
 
@@ -251,6 +265,19 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             }
         }
         catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+        }
+    }
+
+    [RelayCommand]
+    private async Task NewPhieuXuat()
+    {
+        try
+        {
+            await LoadDataAsync();
+        }
+        catch(Exception ex)
         {
             await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
         }
