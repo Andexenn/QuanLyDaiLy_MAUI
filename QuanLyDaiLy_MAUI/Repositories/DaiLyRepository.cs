@@ -33,5 +33,13 @@ public class DaiLyRepository : IDaiLyRepository
         return daily ?? throw new Exception("Bug at GetDaiLyByTenAsync");
     }
 
-
+    public async Task<int> UpdateNoDaiLy(int maDaiLy, double soTienNoMoi)
+    {
+        var daily = await _dataContext.DaiLies.FirstOrDefaultAsync(d => d.MaDaiLy == maDaiLy);
+        if(daily == null)
+            throw new Exception("Bug at UpdateNoDaiLy: DaiLy not found");
+        daily.NoDaiLy = soTienNoMoi;
+        _dataContext.DaiLies.Update(daily);
+        return await _dataContext.SaveChangesAsync();
+    }
 }

@@ -15,4 +15,14 @@ public class MatHangRepository : IMatHangRepository
         return await _dataContext.MatHangs.ToListAsync();
     }
 
+    public async Task<int> UpdateSoLuongTon(int maMatHang, int soLuongTonMoi)
+    {
+        var matHang = await _dataContext.MatHangs.FirstOrDefaultAsync(mh => mh.MaMatHang == maMatHang);
+        if (matHang == null)
+            throw new Exception("Bug at update so luong ton");
+        matHang.SoLuongTon = soLuongTonMoi;
+        _dataContext.MatHangs.Update(matHang);
+        return await _dataContext.SaveChangesAsync();
+    }
+
 }

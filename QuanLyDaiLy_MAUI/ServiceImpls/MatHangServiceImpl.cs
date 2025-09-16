@@ -13,4 +13,6 @@ public class MatHangServiceImpl : IMatHangService
 	{
 		return await _matHangRepository.GetAllMatHangAsync();
     }
+
+	public async Task<int> UpdateSoLuongTon(int maMatHang, int soLuongTonMoi) => await _matHangRepository.UpdateSoLuongTon(maMatHang, soLuongTonMoi);
 }

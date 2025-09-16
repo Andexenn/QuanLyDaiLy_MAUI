@@ -27,7 +27,7 @@ public partial class MatHangXuat : ObservableObject
 
     public MatHangXuat(int soThuTu = 1, MatHang matHang = null!, int soLuongXuat = 0, double donGiaXuat = 0)
     {
-        this.MatHang = matHang;
+        MatHang = matHang;
         SoLuongXuat = soLuongXuat;
         DonGiaXuat = donGiaXuat;
         SoThuTu = soThuTu;
@@ -203,8 +203,11 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             };
 
             await _phieuXuatService.AddPhieuXuatAsync(phieuXuat);
-            UpdateSoLuongTonVaNoDaiLy();
+            //UpdateSoLuongTonVaNoDaiLy();
+            await UpdateNoDaiLy();
+            await UpdateSoLuongTon();
             await Shell.Current.DisplayAlert("Thành công ⭐", "Lập phiếu xuất thành công", "OK");
+            MaPhieuXuat = await _phieuXuatService.GetNextAvailableIdAsync();
             //await CloseWindow();
         }
         catch (Exception ex)
@@ -218,14 +221,27 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
 
     }
 
-    void UpdateSoLuongTonVaNoDaiLy()
+    async Task UpdateSoLuongTon()
     {
-        foreach(var mhx in MatHangXuats)
-            mhx.MatHang.SoLuongTon -= mhx.SoLuongXuat;
-        
-        SelectedDaiLy!.NoDaiLy += TongTien;
+        foreach(MatHangXuat mhx in MatHangXuats)
+        {
+            if (mhx.MatHang != null)
+            {
+                mhx.MatHang.SoLuongTon -= mhx.SoLuongXuat;
+                await _matHangService.UpdateSoLuongTon(mhx.MatHang.MaMatHang, mhx.MatHang.SoLuongTon);
+            }
+        }
     }
 
+    async Task UpdateNoDaiLy()
+    {
+        if(SelectedDaiLy == null)
+            return;
+        SelectedDaiLy.NoDaiLy += TongTien;
+        await _daiLyService.UpdateNoDaiLy(SelectedDaiLy.MaDaiLy, SelectedDaiLy.NoDaiLy);
+    }
+
+  
     async Task<bool> ValidateInput()
     {
         if(SelectedDaiLy == null)
@@ -240,12 +256,12 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
         }
         else if (MatHangXuats[0].SoLuongXuat == 0 || MatHangXuats[0].DonGiaXuat == 0)
         {
-            await Shell.Current.DisplayAlert("Lỗi", "Vui lòng điền số khác 0", "OK");
+            await Shell.Current.DisplayAlert("Lỗi", "Vui lòng điền số khác 0.", "OK");
             return false;
         }
         else if(SelectedDaiLy.NoDaiLy + TongTien > (SelectedDaiLy.LoaiDaiLy?.NoToiDa ?? 0))
         {
-            await Shell.Current.DisplayAlert("Lỗi", "Tổng nợ đại lý vượt quá hạn mức cho phép.", "OK");
+            await Shell.Current.DisplayAlert("Lỗi", $"Tổng nợ đại lý vượt quá hạn mức cho phép.", "OK");
             return false;
         }
         return true;

@@ -8,4 +8,5 @@ public interface IDaiLyRepository
     Task<int> AddDaiLyAsync(DaiLy daiLy);
     Task<int> GetNextAvailableIdAsync();
     Task<DaiLy> GetDaiLyByTenAsync(string tenDaiLy);
+    Task<int> UpdateNoDaiLy(int maDaiLy, double soTienNoMoi);
 }

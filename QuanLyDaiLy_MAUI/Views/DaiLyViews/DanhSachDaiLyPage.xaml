@@ -326,7 +326,7 @@
             <Grid Grid.Row="3" ColumnDefinitions="*, auto">
                 <Border Grid.Column="1" StrokeThickness="0">
                     <HorizontalStackLayout Spacing="20">
-                        <Border Padding="10" StrokeShape="RoundRectangle 10">
+                        <!--<Border Padding="10" StrokeShape="RoundRectangle 10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BeforeButtonCommand}"/>
                             </Border.GestureRecognizers>
@@ -338,20 +338,40 @@
                                        VerticalOptions="Center"/>
                                 <Label Text="Trang trước" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
                             </HorizontalStackLayout>
-                        </Border>
+                        </Border>-->
+
+                        <buttons:SfButton Background="White"
+                                          CornerRadius="10"
+                                          Stroke="Grey"
+                                          Padding="5,0,5,0"
+                                          StrokeThickness="3"
+                                          Command="{Binding BeforeButtonCommand}">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="15" Padding="5,0,5,0">
+                                        <Label FontFamily="FontAwesomeSolid"
+                                               FontSize="20"
+                                               TextColor="Black"
+                                               Text="{x:Static models:FontAwesome.TentArrowTurnLeft}"
+                                               VerticalOptions="Center"/>
+                                        <Label Text="Trang trước" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
 
                         <Border StrokeShape="RoundRectangle 10">
                             <HorizontalStackLayout>
                                 <Border StrokeThickness="0" Padding="10" IsVisible="{Binding BeforePage, Converter={StaticResource PageNumberToVisibleConverter}}">
-                                    <Label Text="{Binding BeforePage}" VerticalOptions="Center" TextColor="Black" />
+                                    <Label Text="{Binding BeforePage}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" />
                                 </Border>
 
                                 <Border StrokeThickness="0" Padding="10" BackgroundColor="#0eaafd">
-                                    <Label Text="{Binding CurrentPage}" VerticalOptions="Center" TextColor="Black"/>
+                                    <Label Text="{Binding CurrentPage}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
                                 </Border>
 
                                 <Border StrokeThickness="0" Padding="10" IsVisible="{Binding NextPage, Converter={StaticResource PageNumberToVisibleConverter}}">
-                                    <Label Text="{Binding NextPage}" VerticalOptions="Center" TextColor="Black"/>
+                                    <Label Text="{Binding NextPage}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
                                 </Border>
                             </HorizontalStackLayout>
                         </Border>
