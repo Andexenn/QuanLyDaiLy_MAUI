@@ -204,6 +204,9 @@
                   ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto"
                   ColumnSpacing="20">
                 <Border Style="{StaticResource Button}"  Grid.Column="0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToTraCuuDaiLyCommand}"/>
+                    </Border.GestureRecognizers>
                     <HorizontalStackLayout Spacing="15">
                         <Label FontFamily="FontAwesomeSolid"
                                FontSize="20"
