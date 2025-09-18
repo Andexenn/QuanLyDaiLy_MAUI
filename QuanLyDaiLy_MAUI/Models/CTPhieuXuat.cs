@@ -6,6 +6,7 @@ namespace QuanLyDaiLy_MAUI.Models;
 public class CTPhieuXuat 
 {
     // [Key]
+    public int MaCTPhieuXuat { get; set; } // Primary Key
     public int MaPhieuXuat { get; set; }  // Composite Primary Key part 1
     public int MaMatHang { get; set; }    // Composite Primary Key part 2
 

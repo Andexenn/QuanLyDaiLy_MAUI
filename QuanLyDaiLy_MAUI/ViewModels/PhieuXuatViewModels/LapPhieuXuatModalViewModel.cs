@@ -64,6 +64,7 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
     private readonly IQuanService _quanService;
     private readonly IThamSoService _thamSoService;
     private readonly IMatHangService _matHangService;
+    private readonly ICTPhieuXuatService _ctPhieuXuatService;
 
     private Popup? _currentPopup;
 
@@ -88,7 +89,7 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollection<MatHangXuat> matHangXuats = [];
 
-    public LapPhieuXuatModalViewModel(IDaiLyService daiLyService, IPhieuXuatService phieuXuatService, ILoaiDaiLyService loaiDaiLyService, IQuanService quanService, IThamSoService thamSoService, IMatHangService matHangService)
+    public LapPhieuXuatModalViewModel(IDaiLyService daiLyService, IPhieuXuatService phieuXuatService, ILoaiDaiLyService loaiDaiLyService, IQuanService quanService, IThamSoService thamSoService, IMatHangService matHangService, ICTPhieuXuatService cTPhieuXuatService)
     {
         _daiLyService = daiLyService;
         _phieuXuatService = phieuXuatService;
@@ -96,6 +97,7 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
         _quanService = quanService;
         _thamSoService = thamSoService;
         _matHangService = matHangService;
+        _ctPhieuXuatService = cTPhieuXuatService;
 
         MatHangXuats.CollectionChanged += MatHangXuats_CollectionChanged;
 
@@ -203,7 +205,7 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             };
 
             await _phieuXuatService.AddPhieuXuatAsync(phieuXuat);
-            //UpdateSoLuongTonVaNoDaiLy();
+            await UpdateCTPX();
             await UpdateNoDaiLy();
             await UpdateSoLuongTon();
             await Shell.Current.DisplayAlert("Thành công ⭐", "Lập phiếu xuất thành công", "OK");
@@ -219,6 +221,26 @@ public partial class LapPhieuXuatModalViewModel : BaseViewModel
             IsLoading = false;
         }
 
+    }
+
+    async Task UpdateCTPX()
+    {
+        foreach(MatHangXuat mhx in MatHangXuats)
+        {
+            if(mhx.MatHang != null && mhx.SoLuongXuat > 0 && mhx.DonGiaXuat > 0)
+            {
+                var ctpx = new CTPhieuXuat
+                {
+                    MaCTPhieuXuat = await _ctPhieuXuatService.GetNextAvailableMaCTPX(),
+                    MaPhieuXuat = MaPhieuXuat,
+                    MaMatHang = mhx.MatHang.MaMatHang,
+                    SoLuongXuat = mhx.SoLuongXuat,
+                    DonGiaXuat = mhx.DonGiaXuat,
+                    ThanhTien = mhx.GiaXuat
+                };
+                await _ctPhieuXuatService.AddCTPhieuXuatAsync(ctpx);
+            }
+        }
     }
 
     async Task UpdateSoLuongTon()

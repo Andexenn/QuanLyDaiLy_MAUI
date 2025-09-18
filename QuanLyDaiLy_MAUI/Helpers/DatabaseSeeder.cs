@@ -11,12 +11,13 @@ public static partial class DatabaseSeeder
 		Debug.WriteLine("Seeding data...");
 #endif
 		
-		SeedDaiLy(modelBuilder);
 		SeedLoaiDaiLy(modelBuilder);
 		SeedQuan(modelBuilder);
 		SeedThamSo(modelBuilder);
+		SeedDaiLy(modelBuilder);
 		SeedDonViTinh(modelBuilder);
-		SeedMatHang(modelBuilder);
         SeedPhieuXuat(modelBuilder);
-    }
+		SeedMatHang(modelBuilder);
+		SeedCTPhieuXuat(modelBuilder);
+	}
 }

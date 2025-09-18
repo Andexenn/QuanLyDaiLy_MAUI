@@ -34,6 +34,7 @@ public static class AppModule
         services.AddScoped<IThamSoService, ThamSoServiceImpl>();
         services.AddScoped<IPhieuXuatService, PhieuXuatServiceImpl>();
         services.AddScoped<IMatHangService, MatHangServiceImpl>();
+        services.AddScoped<ICTPhieuXuatService, CTPhieuXuatServiceImpl>();
 
         // dang ky repository
         services.AddScoped<IDaiLyRepository, DaiLyRepository>();
@@ -42,6 +43,7 @@ public static class AppModule
         services.AddScoped<IThamSoRepository, ThamSoRepository>();
         services.AddScoped<IPhieuXuatRepository, PhieuXuatRepository>();
         services.AddScoped<IMatHangRepository, MatHangRepository>();
+        services.AddScoped<ICTPhieuXuatRepository, CTPhieuXuatRepository>();
 
         // dang ky view
         services.AddTransient<DanhSachDaiLyPage>();
