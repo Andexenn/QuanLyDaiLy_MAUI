@@ -50,7 +50,7 @@
     </ContentPage.Resources>
 
     <Grid Style="{StaticResource skeleton}">
-        <VerticalStackLayout HorizontalOptions="Fill" Spacing="20" Margin="0,0,0,15">
+        <VerticalStackLayout HorizontalOptions="Fill" Spacing="20">
             <Grid ColumnDefinitions="auto,*,auto" Padding="15,15,15,0">
                 <Label Style="{StaticResource title}"/>
                 <Button Style="{StaticResource xButton}" />
@@ -58,7 +58,7 @@
             <BoxView HeightRequest="2"/>
         </VerticalStackLayout>
 
-        <Border Grid.Row="1" Padding="15" StrokeThickness="0">
+        <Border Grid.Row="1" Padding="15" StrokeThickness="0" IsVisible="{Binding IsNotLoading}">
             <Border StrokeShape="RoundRectangle 20" Padding="10" BackgroundColor="#f7f9fd">
                 <VerticalStackLayout Spacing="10">
                     <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="15">
@@ -99,15 +99,15 @@
 
                         <VerticalStackLayout Spacing="10" Grid.Column="5">
                             <Label Text="Tên loại đại lý" Style="{StaticResource SmallTitle}"/>
-                            <Border StrokeShape="RoundRectangle 10">
-                                <Picker />
+                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
+                                <Picker TextColor="Black" ItemsSource="{Binding LoaiDaiLies}" ItemDisplayBinding="{Binding TenLoaiDaiLy}" SelectedItem="{Binding SelectedLoaiDaiLy}"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10" Grid.Column="6">
                             <Label Text="Tên quận" Style="{StaticResource SmallTitle}"/>
-                            <Border StrokeShape="RoundRectangle 10">
-                                <Picker/>
+                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
+                                <Picker TextColor="Black" ItemsSource="{Binding Quans}" ItemDisplayBinding="{Binding TenQuan}" SelectedItem="{Binding SelectedQuan}"/>
                             </Border>
                         </VerticalStackLayout>
                     </Grid>
@@ -130,7 +130,7 @@
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15" Text="{Binding SelectedLoaiDaiLy.NoToiDa}"/>
                             </Border>
                         </HorizontalStackLayout>
                     </Grid>
@@ -184,14 +184,14 @@
                     <Grid ColumnDefinitions="*,*">
                         <HorizontalStackLayout Spacing="10">
                             <Label Text="Tên mặt hàng xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
-                            <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <Picker TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                            <Border StrokeShape="RoundRectangle 10" WidthRequest="150" BackgroundColor="#a2a2a2">
+                                <Picker ItemsSource="{Binding MatHangs}" ItemDisplayBinding="{Binding TenMatHang}" SelectedItem="{Binding SelectedMatHang}" TextColor="Black" VerticalOptions="Center" />
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Column="1" Spacing="10">
                             <Label Text="Tên đơn vị tính" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
-                            <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Picker TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                            <Border WidthRequest="150" StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
+                                <Picker ItemsSource="{Binding DonViTinhs}" ItemDisplayBinding="{Binding TenDonViTinh}" SelectedItem="{Binding SelectedDonViTinh}" TextColor="Black" VerticalOptions="Center" />
                             </Border>
                         </HorizontalStackLayout>
                     </Grid>
@@ -250,6 +250,9 @@
                             </HorizontalStackLayout>
                         </Border>
                         <Border BackgroundColor="#0eaafd" StrokeThickness="0" Padding="10" StrokeShape="RoundRectangle 15">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                            </Border.GestureRecognizers>
                             <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
                                 <Label TextColor="White" Text="Thoát" />
                             </HorizontalStackLayout>
@@ -257,9 +260,9 @@
                     </HorizontalStackLayout>
 
 
-                    <Border StrokeShape="RoundRectangle 10">
-                        <Grid RowDefinitions="auto, *">
-                            <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
+                    <Border StrokeShape="RoundRectangle 10" HeightRequest="150">
+                        <Grid RowDefinitions="auto, *" >
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" BackgroundColor="#6aaaff" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
                                 <Label Text="STT" Style="{StaticResource TableTitle}"/>
                                 <Label Grid.Column="1" Style="{StaticResource TableTitle}" Text="TÊN ĐẠI LÝ" />
                                 <Label Grid.Column="2" Style="{StaticResource TableTitle}" Text="ĐIỆN THOẠI" />
@@ -273,8 +276,34 @@
                             </Grid>
 
                             <ScrollView Grid.Row="1">
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
+                                        <Label Text="STT" Style="{StaticResource TableTitle}"/>
+                                        <Label Grid.Column="1" Style="{StaticResource TableTitle}" Text="TÊN ĐẠI LÝ" />
+                                        <Label Grid.Column="2" Style="{StaticResource TableTitle}" Text="ĐIỆN THOẠI" />
+                                        <Label Grid.Column="3" Style="{StaticResource TableTitle}" Text="ĐỊA CHỈ" />
+                                        <Label Grid.Column="4" Style="{StaticResource TableTitle}" Text="EMAIL" />
+                                        <Label Grid.Column="5" Style="{StaticResource TableTitle}" Text="NGÀY TIẾP NHẬN" />
+                                        <Label Grid.Column="6" Style="{StaticResource TableTitle}" Text="NỢ ĐẠI LÝ" />
+                                        <Label Grid.Column="7" Style="{StaticResource TableTitle}" Text="TÊN LOẠI" />
+                                        <Label Grid.Column="8" Style="{StaticResource TableTitle}" Text="TÊN QUẬN" />
+                                        <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="9"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
+                                        <Label Text="STT" Style="{StaticResource TableTitle}"/>
+                                        <Label Grid.Column="1" Style="{StaticResource TableTitle}" Text="TÊN ĐẠI LÝ" />
+                                        <Label Grid.Column="2" Style="{StaticResource TableTitle}" Text="ĐIỆN THOẠI" />
+                                        <Label Grid.Column="3" Style="{StaticResource TableTitle}" Text="ĐỊA CHỈ" />
+                                        <Label Grid.Column="4" Style="{StaticResource TableTitle}" Text="EMAIL" />
+                                        <Label Grid.Column="5" Style="{StaticResource TableTitle}" Text="NGÀY TIẾP NHẬN" />
+                                        <Label Grid.Column="6" Style="{StaticResource TableTitle}" Text="NỢ ĐẠI LÝ" />
+                                        <Label Grid.Column="7" Style="{StaticResource TableTitle}" Text="TÊN LOẠI" />
+                                        <Label Grid.Column="8" Style="{StaticResource TableTitle}" Text="TÊN QUẬN" />
+                                        <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="9"/>
+                                    </Grid>
+                                </VerticalStackLayout>
                                 
-                                
+
                             </ScrollView>
                         </Grid>
                         
@@ -285,6 +314,7 @@
                 </VerticalStackLayout>
             </Border>
         </Border>
+        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="#0eaafd" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center"/>
     </Grid>
     
 </ContentPage>

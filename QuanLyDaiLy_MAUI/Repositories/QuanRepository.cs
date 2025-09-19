@@ -9,8 +9,5 @@ public class QuanRepository : IQuanRepository
 {
     private readonly DataContext _dataContext;
     public QuanRepository(DataContext dataContext) => _dataContext = dataContext;
-    public async Task<IEnumerable<Quan>> GetAllQuanAsync()
-    {
-        return await _dataContext.Quans.ToListAsync();
-    }
+    public async Task<IEnumerable<Quan>> GetAllQuanAsync() => await _dataContext.Quans.ToListAsync();
 }
