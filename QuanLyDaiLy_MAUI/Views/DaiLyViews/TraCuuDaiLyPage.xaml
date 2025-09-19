@@ -65,49 +65,49 @@
                         <VerticalStackLayout Spacing="10">
                             <Label Text="Mã đại lý" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black"/>
+                                <Entry TextColor="Black" Text="{Binding MaDaiLy, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10" Grid.Column="1">
                             <Label Text="Tên đại lý" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black"/>
+                                <Entry TextColor="Black" Text="{Binding TenLoaiDaiLy, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10" Grid.Column="2">
                             <Label Text="Điện thoại" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black"/>
+                                <Entry TextColor="Black" Text="{Binding SoDienThoai, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10" Grid.Column="3">
                             <Label Text="Địa chỉ" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black"/>
+                                <Entry TextColor="Black" Text="{Binding DiaChi, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10" Grid.Column="4">
                             <Label Text="Email" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black"/>
+                                <Entry TextColor="Black" Text="{Binding Email, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10" Grid.Column="5">
                             <Label Text="Tên loại đại lý" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                                <Picker TextColor="Black" ItemsSource="{Binding LoaiDaiLies}" ItemDisplayBinding="{Binding TenLoaiDaiLy}" SelectedItem="{Binding SelectedLoaiDaiLy}"/>
+                                <Picker TextColor="Black" ItemsSource="{Binding LoaiDaiLies}" ItemDisplayBinding="{Binding TenLoaiDaiLy}" SelectedItem="{Binding SelectedLoaiDaiLy, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10" Grid.Column="6">
                             <Label Text="Tên quận" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                                <Picker TextColor="Black" ItemsSource="{Binding Quans}" ItemDisplayBinding="{Binding TenQuan}" SelectedItem="{Binding SelectedQuan}"/>
+                                <Picker TextColor="Black" ItemsSource="{Binding Quans}" ItemDisplayBinding="{Binding TenQuan}" SelectedItem="{Binding SelectedQuan, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
                     </Grid>
@@ -116,21 +116,21 @@
                         <HorizontalStackLayout Spacing="10">
                             <Label Text="Ngày tiếp nhận" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <DatePicker TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
+                                <DatePicker Date="{Binding NgayTiepNhanFrom}" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <DatePicker TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
+                                <DatePicker Date="{Binding NgayTiepNhanTo}" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Column="1" Spacing="10" HorizontalOptions="End">
                             <Label Text="Nợ đại lý" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10" >
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15" Text="{Binding NoDaiLyFrom}"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15" Text="{Binding SelectedLoaiDaiLy.NoToiDa}"/>
+                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15" Text="{Binding NoDaiLyTo}"/>
                             </Border>
                         </HorizontalStackLayout>
                     </Grid>
@@ -139,21 +139,21 @@
                         <HorizontalStackLayout Spacing="10">
                             <Label Text="Nợ tối đa theo loại đại lý" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15" Text="{Binding SelectedLoaiDaiLy.NoToiDa}"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <Entry TextColor="Black" VerticalOptions="Center"  FontSize="15"/>
+                                <Entry TextColor="Black" VerticalOptions="Center"  FontSize="15" Text="{Binding SelectedLoaiDaiLy.NoToiDa}"/>
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Column="1" Spacing="10" HorizontalOptions="End">
                             <Label Text="Mã phiếu xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15" Text="{Binding MaPhieuXuatFrom}"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15" Text="{Binding MaPhieuXuatTo}"/>
                             </Border>
                         </HorizontalStackLayout>
                     </Grid>
@@ -162,59 +162,59 @@
                         <HorizontalStackLayout Spacing="10">
                             <Label Text="Ngày lập phiếu xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <DatePicker TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
+                                <DatePicker Date="{Binding NgayLapPhieuXuatFrom}" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <DatePicker TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
+                                <DatePicker Date="{Binding NgayLapPhieuXuatTo}" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Column="1" Spacing="10" HorizontalOptions="End">
                             <Label Text="Tổng giá trị phiếu xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding TongTienPhieuXuatFrom}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding TongTienPhieuXuatTo}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                         </HorizontalStackLayout>
                     </Grid>
 
-                    <Grid ColumnDefinitions="*,*">
+                    <HorizontalStackLayout Spacing="30">
                         <HorizontalStackLayout Spacing="10">
                             <Label Text="Tên mặt hàng xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150" BackgroundColor="#a2a2a2">
                                 <Picker ItemsSource="{Binding MatHangs}" ItemDisplayBinding="{Binding TenMatHang}" SelectedItem="{Binding SelectedMatHang}" TextColor="Black" VerticalOptions="Center" />
                             </Border>
                         </HorizontalStackLayout>
-                        <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                        <HorizontalStackLayout Spacing="10">
                             <Label Text="Tên đơn vị tính" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                                <Picker ItemsSource="{Binding DonViTinhs}" ItemDisplayBinding="{Binding TenDonViTinh}" SelectedItem="{Binding SelectedDonViTinh}" TextColor="Black" VerticalOptions="Center" />
+                                <Picker IsEnabled="False" ItemsSource="{Binding DonViTinhs}" ItemDisplayBinding="{Binding TenDonViTinh}" SelectedItem="{Binding SelectedMatHang.DonViTinh,Mode=OneWay}" TextColor="Black" VerticalOptions="Center" />
                             </Border>
                         </HorizontalStackLayout>
-                    </Grid>
+                    </HorizontalStackLayout>
 
                     <Grid ColumnDefinitions="*,*">
                         <HorizontalStackLayout Spacing="10">
                             <Label Text="Số lượng xuất của mặt hàng xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding SoLuongMatHangXuatFrom}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding SoLuongMatHangXuatTo}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Column="1" Spacing="10" HorizontalOptions="End">
                             <Label Text="Đơn giá xuất của mặt hàng xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding DonGiaMatHangXuatFrom}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding DonGiaMatHangXuatTo}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                         </HorizontalStackLayout>
                     </Grid>
@@ -223,21 +223,21 @@
                         <HorizontalStackLayout Spacing="10">
                             <Label Text="Thành tiền của mặt hàng xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding ThanhTienMatHangXuatFrom}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border StrokeShape="RoundRectangle 10" WidthRequest="150">
-                                <Entry TextColor="Black" VerticalOptions="Center"  FontSize="15"/>
+                                <Entry Text="{Binding ThanhTienMatHangXuatTo}" TextColor="Black" VerticalOptions="Center"  FontSize="15"/>
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Column="1" Spacing="10" HorizontalOptions="End">
                             <Label Text="Số lượng tồn của mặt hàng xuất" Style="{StaticResource SmallTitle}" VerticalOptions="Center"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding SoLuongTonMatHangXuatFrom}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                             <Label Text="đến" TextColor="Red" VerticalOptions="Center" FontSize="15"/>
                             <Border WidthRequest="150" StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" VerticalOptions="Center" FontSize="15"/>
+                                <Entry Text="{Binding SoLuongTonMatHangXuatTo}" TextColor="Black" VerticalOptions="Center" FontSize="15"/>
                             </Border>
                         </HorizontalStackLayout>
                     </Grid>
@@ -289,21 +289,8 @@
                                         <Label Grid.Column="8" Style="{StaticResource TableTitle}" Text="TÊN QUẬN" />
                                         <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="9"/>
                                     </Grid>
-                                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
-                                        <Label Text="STT" Style="{StaticResource TableTitle}"/>
-                                        <Label Grid.Column="1" Style="{StaticResource TableTitle}" Text="TÊN ĐẠI LÝ" />
-                                        <Label Grid.Column="2" Style="{StaticResource TableTitle}" Text="ĐIỆN THOẠI" />
-                                        <Label Grid.Column="3" Style="{StaticResource TableTitle}" Text="ĐỊA CHỈ" />
-                                        <Label Grid.Column="4" Style="{StaticResource TableTitle}" Text="EMAIL" />
-                                        <Label Grid.Column="5" Style="{StaticResource TableTitle}" Text="NGÀY TIẾP NHẬN" />
-                                        <Label Grid.Column="6" Style="{StaticResource TableTitle}" Text="NỢ ĐẠI LÝ" />
-                                        <Label Grid.Column="7" Style="{StaticResource TableTitle}" Text="TÊN LOẠI" />
-                                        <Label Grid.Column="8" Style="{StaticResource TableTitle}" Text="TÊN QUẬN" />
-                                        <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="9"/>
-                                    </Grid>
                                 </VerticalStackLayout>
                                 
-
                             </ScrollView>
                         </Grid>
                         
