@@ -51,6 +51,8 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 	[ObservableProperty]
 	private DonViTinh? selectedDonViTinh;
 	[ObservableProperty]
+	string tenDaiLy = "";
+	[ObservableProperty]
 	string maDaiLy = "";
 	[ObservableProperty]
 	string tenLoaiDaiLy = "";
@@ -143,8 +145,8 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 		await Task.Yield();
 		try
 		{
-
-		}
+			FilterDaiLies();
+        }
 		catch(Exception ex)
 		{
 			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
@@ -154,5 +156,46 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 			await Task.Yield();
 			IsLoading = false;
         }
+    }
+
+	private void FilterDaiLies()
+	{
+		var query = DaiLies.AsEnumerable();
+		if(!string.IsNullOrWhiteSpace(TenDaiLy))
+		{
+			query = query.Where(d => d.TenDaiLy.Contains(TenDaiLy, StringComparison.OrdinalIgnoreCase));
+		}
+		if (!string.IsNullOrWhiteSpace(MaDaiLy) && int.TryParse(MaDaiLy, out int maDaiLyValue))
+		{
+			query = query.Where(d => d.MaDaiLy == maDaiLyValue);
+		}
+		if (!string.IsNullOrWhiteSpace(TenLoaiDaiLy))
+		{
+			query = query.Where(d => d.LoaiDaiLy != null && d.LoaiDaiLy.TenLoaiDaiLy.Contains(TenLoaiDaiLy, StringComparison.OrdinalIgnoreCase));
+		}
+		if (!string.IsNullOrWhiteSpace(SoDienThoai))
+		{
+			query = query.Where(d => d.SoDienThoai.Contains(SoDienThoai, StringComparison.OrdinalIgnoreCase));
+		}
+		if (!string.IsNullOrWhiteSpace(DiaChi))
+		{
+			query = query.Where(d => d.DiaChi.Contains(DiaChi, StringComparison.OrdinalIgnoreCase));
+		}
+		if (!string.IsNullOrWhiteSpace(Email))
+		{
+			query = query.Where(d => d.Email.Contains(Email, StringComparison.OrdinalIgnoreCase));
+		}
+		if (SelectedLoaiDaiLy != null)
+		{
+			query = query.Where(d => d.MaLoaiDaiLy == SelectedLoaiDaiLy.MaLoaiDaiLy);
+		}
+		if (SelectedQuan != null)
+		{
+			query = query.Where(d => d.MaQuan == SelectedQuan.MaQuan);
+		}
+		query = query.Where(d => d.NgayTiepNhan >= NgayTiepNhanFrom && d.NgayTiepNhan <= NgayTiepNhanTo);
+		query = query.Where(d => d.NoDaiLy >= NoDaiLyFrom && d.NoDaiLy <= NoDaiLyTo);
+		// Additional filtering based on related entities can be added here
+		FilteredDaiLies = new ObservableCollection<DaiLy>(query);
     }
 }

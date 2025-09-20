@@ -72,7 +72,7 @@
                         <VerticalStackLayout Spacing="10" Grid.Column="1">
                             <Label Text="Tên đại lý" Style="{StaticResource SmallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry TextColor="Black" Text="{Binding TenLoaiDaiLy, Mode=TwoWay}"/>
+                                <Entry TextColor="Black" Text="{Binding TenDaiLy, Mode=TwoWay}"/>
                             </Border>
                         </VerticalStackLayout>
 
@@ -244,6 +244,9 @@
 
                     <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
                         <Border BackgroundColor="#0eaafd" StrokeThickness="0" Padding="10" StrokeShape="RoundRectangle 15">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TraCuuDaiLyCommand}"/>
+                            </Border.GestureRecognizers>
                             <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
                                 <Label FontFamily="FontAwesomeSolid" TextColor="White" Text="{x:Static models:FontAwesome.UsersViewfinder}" VerticalOptions="Center" />
                                 <Label TextColor="White" Text="Tra cứu đại lý" VerticalOptions="Center"/>
@@ -263,7 +266,7 @@
                     <Border StrokeShape="RoundRectangle 10" HeightRequest="150">
                         <Grid RowDefinitions="auto, *" >
                             <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" BackgroundColor="#6aaaff" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
-                                <Label Text="STT" Style="{StaticResource TableTitle}"/>
+                                <Label Text="MÃ ĐẠI LÝ" Style="{StaticResource TableTitle}"/>
                                 <Label Grid.Column="1" Style="{StaticResource TableTitle}" Text="TÊN ĐẠI LÝ" />
                                 <Label Grid.Column="2" Style="{StaticResource TableTitle}" Text="ĐIỆN THOẠI" />
                                 <Label Grid.Column="3" Style="{StaticResource TableTitle}" Text="ĐỊA CHỈ" />
@@ -276,20 +279,24 @@
                             </Grid>
 
                             <ScrollView Grid.Row="1">
-                                <VerticalStackLayout>
-                                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
-                                        <Label Text="STT" Style="{StaticResource TableTitle}"/>
-                                        <Label Grid.Column="1" Style="{StaticResource TableTitle}" Text="TÊN ĐẠI LÝ" />
-                                        <Label Grid.Column="2" Style="{StaticResource TableTitle}" Text="ĐIỆN THOẠI" />
-                                        <Label Grid.Column="3" Style="{StaticResource TableTitle}" Text="ĐỊA CHỈ" />
-                                        <Label Grid.Column="4" Style="{StaticResource TableTitle}" Text="EMAIL" />
-                                        <Label Grid.Column="5" Style="{StaticResource TableTitle}" Text="NGÀY TIẾP NHẬN" />
-                                        <Label Grid.Column="6" Style="{StaticResource TableTitle}" Text="NỢ ĐẠI LÝ" />
-                                        <Label Grid.Column="7" Style="{StaticResource TableTitle}" Text="TÊN LOẠI" />
-                                        <Label Grid.Column="8" Style="{StaticResource TableTitle}" Text="TÊN QUẬN" />
-                                        <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="9"/>
-                                    </Grid>
-                                </VerticalStackLayout>
+                                <CollectionView ItemsSource="{Binding FilteredDaiLies}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:DaiLy">
+                                            <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
+                                                <Label Text="{Binding MaDaiLy}" Style="{StaticResource TableTitle}"/>
+                                                <Label Grid.Column="1" Style="{StaticResource TableTitle}" Text="{Binding TenDaiLy}" />
+                                                <Label Grid.Column="2" Style="{StaticResource TableTitle}" Text="{Binding SoDienThoai}" />
+                                                <Label Grid.Column="3" Style="{StaticResource TableTitle}" Text="{Binding DiaChi}" />
+                                                <Label Grid.Column="4" Style="{StaticResource TableTitle}" Text="{Binding Email}" />
+                                                <Label Grid.Column="5" Style="{StaticResource TableTitle}" Text="{Binding NgayTiepNhan, StringFormat='{0:dd/MM/yyyy}'}" />
+                                                <Label Grid.Column="6" Style="{StaticResource TableTitle}" Text="{Binding NoDaiLy}" />
+                                                <Label Grid.Column="7" Style="{StaticResource TableTitle}" Text="{Binding LoaiDaiLy.TenLoaiDaiLy}" />
+                                                <Label Grid.Column="8" Style="{StaticResource TableTitle}" Text="{Binding Quan.TenQuan}" />
+                                                <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="9"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
                                 
                             </ScrollView>
                         </Grid>
