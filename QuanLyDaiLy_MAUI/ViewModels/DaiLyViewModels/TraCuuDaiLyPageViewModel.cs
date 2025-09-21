@@ -199,15 +199,156 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 		query = query.Where(d => d.PhieuXuats.Any(px => px.MaPhieuXuat >= MaPhieuXuatFrom && px.MaPhieuXuat <= MaPhieuXuatTo));
 		query = query.Where(d => d.PhieuXuats.Any(px => px.NgayLapPhieu >= NgayLapPhieuXuatFrom && px.NgayLapPhieu <= NgayLapPhieuXuatTo));
 		query = query.Where(d => d.PhieuXuats.Any(px => px.TongTriGia >= TongTienPhieuXuatFrom && px.TongTriGia <= TongTienPhieuXuatTo));
-		//if(SelectedMatHang != null)
-		//{
-		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang)));
-		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.SoLuongXuat >= SoLuongMatHangXuatFrom && ctpx.SoLuongXuat <= SoLuongMatHangXuatTo)));
-		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.DonGiaXuat >= DonGiaMatHangXuatFrom && ctpx.DonGiaXuat <= DonGiaMatHangXuatTo)));
-		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.ThanhTien >= ThanhTienMatHangXuatFrom && ctpx.ThanhTien <= ThanhTienMatHangXuatTo)));
-		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.MatHang != null && ctpx.MatHang.SoLuongTon >= SoLuongTonMatHangXuatFrom && ctpx.MatHang.SoLuongTon <= SoLuongTonMatHangXuatTo)));
-		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.ThanhTien >= ThanhTienMatHangXuatFrom && ctpx.ThanhTien <= ThanhTienMatHangXuatTo)));
-		//}
+		if (SelectedMatHang != null)
+		{
+#if DEBUG
+			Debug.WriteLine($"Filtering by MatHang: {SelectedMatHang.TenMatHang}");
+#endif
+            //query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang)));
+			List<int> tmp = [];
+			foreach(var px in PhieuXuats)
+			{
+				foreach(var ctpx in px.CTPhieuXuats)
+				{
+					if (ctpx.MaMatHang == SelectedMatHang.MaMatHang)
+						tmp.Add(px.MaDaiLy);
+				}
+			}
+
+			List<DaiLy> tmpQuery = [];
+
+			foreach(var q in query)
+			{
+				bool f = false;
+				foreach(int x in tmp)
+				{
+					if (q.MaDaiLy == x)
+						f = true;
+				}
+				if (f == false)
+					tmpQuery.Add(q);
+			}
+			query = new ObservableCollection<DaiLy>(tmpQuery);
+
+            //query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.SoLuongXuat >= SoLuongMatHangXuatFrom && ctpx.SoLuongXuat <= SoLuongMatHangXuatTo)));
+            tmp = [];
+            foreach (var px in PhieuXuats)
+            {
+                foreach (var ctpx in px.CTPhieuXuats)
+                {
+                    if (ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.SoLuongXuat >= SoLuongMatHangXuatFrom && ctpx.SoLuongXuat <= SoLuongMatHangXuatTo)
+                        tmp.Add(px.MaDaiLy);
+                }
+            }
+
+            tmpQuery = [];
+
+            foreach (var q in query)
+            {
+                bool f = false;
+                foreach (int x in tmp)
+                {
+                    if (q.MaDaiLy == x)
+                        f = true;
+                }
+                if (f == false)
+                    tmpQuery.Add(q);
+            }
+            query = new ObservableCollection<DaiLy>(tmpQuery);
+
+
+            //query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.DonGiaXuat >= DonGiaMatHangXuatFrom && ctpx.DonGiaXuat <= DonGiaMatHangXuatTo)));
+            tmp = [];
+            foreach (var px in PhieuXuats)
+            {
+                foreach (var ctpx in px.CTPhieuXuats)
+                {
+                    if (ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.DonGiaXuat >= DonGiaMatHangXuatFrom && ctpx.DonGiaXuat <= DonGiaMatHangXuatTo)
+                        tmp.Add(px.MaDaiLy);
+                }
+            }
+
+            tmpQuery = [];
+
+            foreach (var q in query)
+            {
+                bool f = false;
+                foreach (int x in tmp)
+                {
+                    if (q.MaDaiLy == x)
+                        f = true;
+                }
+                if (f == false)
+                    tmpQuery.Add(q);
+            }
+            query = new ObservableCollection<DaiLy>(tmpQuery);
+
+            //query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.ThanhTien >= ThanhTienMatHangXuatFrom && ctpx.ThanhTien <= ThanhTienMatHangXuatTo)));
+            tmp = [];
+            foreach (var px in PhieuXuats)
+            {
+                foreach (var ctpx in px.CTPhieuXuats)
+                {
+                    if (ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.ThanhTien >= ThanhTienMatHangXuatFrom && ctpx.ThanhTien <= ThanhTienMatHangXuatTo)
+                        tmp.Add(px.MaDaiLy);
+                }
+            }
+
+            tmpQuery = [];
+
+            foreach (var q in query)
+            {
+                bool f = false;
+                foreach (int x in tmp)
+                {
+                    if (q.MaDaiLy == x)
+                        f = true;
+                }
+                if (f == false)
+                    tmpQuery.Add(q);
+            }
+            query = new ObservableCollection<DaiLy>(tmpQuery);
+
+            //query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.MatHang != null && ctpx.MatHang.SoLuongTon >= SoLuongTonMatHangXuatFrom && ctpx.MatHang.SoLuongTon <= SoLuongTonMatHangXuatTo)));
+            tmp = [];
+            foreach (var px in PhieuXuats)
+            {
+                foreach (var ctpx in px.CTPhieuXuats)
+                {
+                    if (ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.MatHang != null && ctpx.MatHang.SoLuongTon >= SoLuongMatHangXuatFrom && ctpx.MatHang.SoLuongTon <= SoLuongMatHangXuatTo)
+                        tmp.Add(px.MaDaiLy);
+                }
+            }
+
+            tmpQuery = [];
+
+            foreach (var q in query)
+            {
+                bool f = false;
+                foreach (int x in tmp)
+                {
+                    if (q.MaDaiLy == x)
+                        f = true;
+                }
+                if (f == false)
+                    tmpQuery.Add(q);
+            }
+            query = new ObservableCollection<DaiLy>(tmpQuery);
+
+            //         Debug.WriteLine($"DaiLies: {DaiLies.Count}");
+            //         foreach (var d in DaiLies)
+            //{
+            //             Debug.WriteLine($"DaiLy {d.MaDaiLy}: PhieuXuats={d.PhieuXuats?.Count}");
+            //	foreach (var px in d.PhieuXuats)
+            //	{
+            //		Debug.WriteLine($"  PhieuXuat {px.MaPhieuXuat}: CTPhieuXuats={px.CTPhieuXuats?.Count}");
+            //		foreach (var ctpx in px.CTPhieuXuats)
+            //		{
+            //			Debug.WriteLine($"    CTPhieuXuat: MaMatHang={ctpx.MaMatHang}, SoLuongXuat={ctpx.SoLuongXuat}, DonGiaXuat={ctpx.DonGiaXuat}, ThanhTien={ctpx.ThanhTien}");
+            //		}
+            //             }
+            //         }
+        }
 
 		FilteredDaiLies = new ObservableCollection<DaiLy>(query);
     }
