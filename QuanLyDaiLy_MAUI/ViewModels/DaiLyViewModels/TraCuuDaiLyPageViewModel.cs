@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using QuanLyDaiLy_MAUI.Services;
 using QuanLyDaiLy_MAUI.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace QuanLyDaiLy_MAUI.ViewModels.DaiLyViewModels;
 
@@ -40,6 +41,8 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 	[ObservableProperty]
 	ObservableCollection<DaiLy> daiLies = [];
 	[ObservableProperty]
+	ObservableCollection<PhieuXuat> phieuXuats = [];
+    [ObservableProperty]
 	ObservableCollection<DaiLy> filteredDaiLies = [];
 
     [ObservableProperty]
@@ -55,8 +58,6 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 	[ObservableProperty]
 	string maDaiLy = "";
 	[ObservableProperty]
-	string tenLoaiDaiLy = "";
-	[ObservableProperty]
 	string soDienThoai = "";
 	[ObservableProperty]
 	string diaChi = "";
@@ -64,7 +65,7 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 	string email = "";
 
 	[ObservableProperty]
-	DateTime ngayTiepNhanFrom = DateTime.Now.AddYears(-1);
+	DateTime ngayTiepNhanFrom = DateTime.Now.AddYears(-50);
 	[ObservableProperty]
 	DateTime ngayTiepNhanTo = DateTime.Now;
 	[ObservableProperty]
@@ -76,7 +77,7 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 	[ObservableProperty]
 	int maPhieuXuatTo = 1000000;
 	[ObservableProperty]
-	DateTime ngayLapPhieuXuatFrom = DateTime.Now.AddYears(-1);
+	DateTime ngayLapPhieuXuatFrom = DateTime.Now.AddYears(-50);
 	[ObservableProperty]
 	DateTime ngayLapPhieuXuatTo = DateTime.Now;
 	[ObservableProperty]
@@ -112,20 +113,24 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 		await Task.Yield();
         try
 		{
-            _ = Task.Run(async () =>
-            {
-                var matHangs = await _matHangService.GetAllMatHangAsync();
-                var quans = await _quanService.GetAllQuanAsync();
-                var donViTinhs = await _donViTinhService.GetAllDonViTinhAsync();
-                var loaiDaiLies = await _loaiDaiLyService.GetAllLoaiDaiLyAsync(); 
-				var daiLies = await _daiLyService.GetAllDaiLyAsync();
+            var matHangs = await _matHangService.GetAllMatHangAsync();
+            var quans = await _quanService.GetAllQuanAsync();
+            var donViTinhs = await _donViTinhService.GetAllDonViTinhAsync();
+            var loaiDaiLies = await _loaiDaiLyService.GetAllLoaiDaiLyAsync();
+            var daiLies = await _daiLyService.GetAllDaiLyAsync();
+            var phieuXuats = await _phieuXuatService.GetAllPhieuXuatAsync();
 
-				DaiLies = new ObservableCollection<DaiLy>(daiLies);
-                MatHangs = new ObservableCollection<MatHang>(matHangs);
-                Quans = new ObservableCollection<Quan>(quans);
-                DonViTinhs = new ObservableCollection<DonViTinh>(donViTinhs);
-                LoaiDaiLies = new ObservableCollection<LoaiDaiLy>(loaiDaiLies);
-            });
+            DaiLies = new ObservableCollection<DaiLy>(daiLies);
+            MatHangs = new ObservableCollection<MatHang>(matHangs);
+            Quans = new ObservableCollection<Quan>(quans);
+            DonViTinhs = new ObservableCollection<DonViTinh>(donViTinhs);
+            LoaiDaiLies = new ObservableCollection<LoaiDaiLy>(loaiDaiLies);
+            PhieuXuats = new ObservableCollection<PhieuXuat>(phieuXuats);
+            //_ = Task.Run(async () =>
+            //{
+                
+            //});
+			Debug.WriteLine($"{DaiLies.Count}");
         }
 		catch (Exception ex)
 		{
@@ -169,10 +174,6 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 		{
 			query = query.Where(d => d.MaDaiLy == maDaiLyValue);
 		}
-		if (!string.IsNullOrWhiteSpace(TenLoaiDaiLy))
-		{
-			query = query.Where(d => d.LoaiDaiLy != null && d.LoaiDaiLy.TenLoaiDaiLy.Contains(TenLoaiDaiLy, StringComparison.OrdinalIgnoreCase));
-		}
 		if (!string.IsNullOrWhiteSpace(SoDienThoai))
 		{
 			query = query.Where(d => d.SoDienThoai.Contains(SoDienThoai, StringComparison.OrdinalIgnoreCase));
@@ -195,7 +196,19 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
 		}
 		query = query.Where(d => d.NgayTiepNhan >= NgayTiepNhanFrom && d.NgayTiepNhan <= NgayTiepNhanTo);
 		query = query.Where(d => d.NoDaiLy >= NoDaiLyFrom && d.NoDaiLy <= NoDaiLyTo);
-		// Additional filtering based on related entities can be added here
+		query = query.Where(d => d.PhieuXuats.Any(px => px.MaPhieuXuat >= MaPhieuXuatFrom && px.MaPhieuXuat <= MaPhieuXuatTo));
+		query = query.Where(d => d.PhieuXuats.Any(px => px.NgayLapPhieu >= NgayLapPhieuXuatFrom && px.NgayLapPhieu <= NgayLapPhieuXuatTo));
+		query = query.Where(d => d.PhieuXuats.Any(px => px.TongTriGia >= TongTienPhieuXuatFrom && px.TongTriGia <= TongTienPhieuXuatTo));
+		//if(SelectedMatHang != null)
+		//{
+		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang)));
+		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.SoLuongXuat >= SoLuongMatHangXuatFrom && ctpx.SoLuongXuat <= SoLuongMatHangXuatTo)));
+		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.DonGiaXuat >= DonGiaMatHangXuatFrom && ctpx.DonGiaXuat <= DonGiaMatHangXuatTo)));
+		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.ThanhTien >= ThanhTienMatHangXuatFrom && ctpx.ThanhTien <= ThanhTienMatHangXuatTo)));
+		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.MatHang != null && ctpx.MatHang.SoLuongTon >= SoLuongTonMatHangXuatFrom && ctpx.MatHang.SoLuongTon <= SoLuongTonMatHangXuatTo)));
+		//	query = query.Where(d => d.PhieuXuats.Any(px => px.CTPhieuXuats.Any(ctpx => ctpx.MaMatHang == SelectedMatHang.MaMatHang && ctpx.ThanhTien >= ThanhTienMatHangXuatFrom && ctpx.ThanhTien <= ThanhTienMatHangXuatTo)));
+		//}
+
 		FilteredDaiLies = new ObservableCollection<DaiLy>(query);
     }
 }

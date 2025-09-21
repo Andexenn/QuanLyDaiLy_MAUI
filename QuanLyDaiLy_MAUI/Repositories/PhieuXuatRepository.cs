@@ -20,4 +20,6 @@ public class PhieuXuatRepository : IPhieuXuatRepository
 		await _dataContext.PhieuXuats.AddAsync(phieuXuat);
 		return await _dataContext.SaveChangesAsync();
     }
+
+	public async Task<IEnumerable<PhieuXuat>> GetAllPhieuXuatAsync() => await _dataContext.PhieuXuats.ToListAsync();
 }

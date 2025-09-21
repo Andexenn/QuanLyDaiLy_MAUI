@@ -12,4 +12,5 @@ public class PhieuXuatServiceImpl : IPhieuXuatService
 
 	public async Task<int> GetNextAvailableIdAsync() => await _phieuXuatRepository.GetNextAvailableIdAsync();
 	public async Task<int> AddPhieuXuatAsync(PhieuXuat phieuXuat) => await _phieuXuatRepository.AddPhieuXuatAsync(phieuXuat);
+	public async Task<IEnumerable<PhieuXuat>> GetAllPhieuXuatAsync() => await _phieuXuatRepository.GetAllPhieuXuatAsync();
 }

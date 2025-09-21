@@ -6,4 +6,6 @@ public interface IPhieuXuatRepository
 {
 	Task<int> GetNextAvailableIdAsync();
 	Task<int> AddPhieuXuatAsync(PhieuXuat phieuXuat);
+
+	Task<IEnumerable<PhieuXuat>> GetAllPhieuXuatAsync();
 }
