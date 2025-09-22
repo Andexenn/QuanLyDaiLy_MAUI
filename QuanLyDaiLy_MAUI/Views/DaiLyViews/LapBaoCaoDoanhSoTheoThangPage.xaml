@@ -20,6 +20,13 @@
                 <Setter Property="FontSize" Value="12"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
             </Style>
+
+            <Style TargetType="Label" x:Key="content">
+                <Setter Property="FontFamily" Value="MontserratRegular"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -31,27 +38,30 @@
 
         <BoxView HeightRequest="2" />
 
-        <VerticalStackLayout Padding="20,0,20,20">
+        <VerticalStackLayout Padding="20,0,20,20" >
             <Border BackgroundColor="#f7f9fd" Padding="10" StrokeShape="RoundRectangle 15">
                 <Grid RowDefinitions="auto,auto,auto,*" RowSpacing="20">
                     <HorizontalStackLayout Spacing="30">
                         <VerticalStackLayout Spacing="10">
                             <Label Text="Năm lập báo cáo" Style="{StaticResource smallTitle}"/>
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry />
+                                <Entry Text="{Binding NamBaoCao}" TextColor="Black"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="10">
                             <Label Text="Tháng lập báo cáo" Style="{StaticResource smallTitle}" />
                             <Border StrokeShape="RoundRectangle 10">
-                                <Entry/>
+                                <Entry Text="{Binding ThangBaoCao}" TextColor="Black"/>
                             </Border>
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="20">
                         <Border BackgroundColor="#00aaff" Padding="10" StrokeThickness="0" StrokeShape="RoundRectangle 10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LapBaoCaoDoanhSoCommand}"/>
+                            </Border.GestureRecognizers>
                             <Label Text="Lập báo cáo doanh số" FontFamily="MontserratRegular" FontSize="15"/>
                         </Border>
 
@@ -66,11 +76,11 @@
                     <HorizontalStackLayout Grid.Row="2" Spacing="20" HorizontalOptions="Center">
                         <Label VerticalOptions="Center" Text="Tổng doanh số trong tháng của tất cả đại lý" Style="{StaticResource smallTitle}" />
                         <Border VerticalOptions="Center" WidthRequest="300" StrokeShape="RoundRectangle 10">
-                            <Entry IsReadOnly="True" TextColor="Black"/>
+                            <Entry IsReadOnly="True" TextColor="Black" Text="{Binding TongGiaTriGiaoDichCuaTatCaDaiLy}"/>
                         </Border>
                     </HorizontalStackLayout>
 
-                    <Border Grid.Row="3" StrokeShape="RoundRectangle 5">
+                    <Border Grid.Row="3" StrokeShape="RoundRectangle 5" HeightRequest="400" IsVisible="{Binding IsNotLoading}">
                         <VerticalStackLayout>
                             <Grid ColumnDefinitions="*,*,*,*,*" Padding="10">
                                 <Label Text="STT" Style="{StaticResource header}"/>
@@ -80,11 +90,29 @@
                                 <Label Text="TỈ LỆ" Grid.Column="4" Style="{StaticResource header}"/>
                             </Grid>
                             <BoxView HeightRequest="2" />
-                            
-                            
+
+                            <ScrollView>
+                                <CollectionView ItemsSource="{Binding DanhSachDaiLyHopLe}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="viewmodels:DaiLyHopLe">
+                                        <VerticalStackLayout>
+                                            <Grid ColumnDefinitions="*,*,*,*,*" Padding="10">
+                                                <Label Text="{Binding SoThuTu}" Style="{StaticResource content}"/>
+                                                <Label Text="{Binding TenDaiLy}" Grid.Column="1" Style="{StaticResource content}"/>
+                                                <Label Text="{Binding SoLuongPhieuXuat}" Grid.Column="2" Style="{StaticResource content}" />
+                                                <Label Text="{Binding TongGiaTriGiaoDichTrongThang}" Grid.Column="3" Style="{StaticResource content}"/>
+                                                <Label Text="{Binding TiLe}" Grid.Column="4" Style="{StaticResource content}"/>
+                                            </Grid>
+                                            <BoxView HeightRequest="2" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            </ScrollView>
                             
                         </VerticalStackLayout>
                     </Border>
+                    <ActivityIndicator Grid.Row="3" IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="#00aaff" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center" VerticalOptions="Center"/>
                 </Grid>
             </Border>
         </VerticalStackLayout>

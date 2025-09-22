@@ -270,7 +270,7 @@
                     </HorizontalStackLayout>
 
 
-                    <Border StrokeShape="RoundRectangle 10" HeightRequest="150">
+                    <Border StrokeShape="RoundRectangle 10" HeightRequest="150" IsVisible="{Binding IsNotLoading}">
                         <Grid RowDefinitions="auto, *" >
                             <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*" BackgroundColor="#6aaaff" RowDefinitions="*,*" RowSpacing="10" Padding="0, 15,0,0">
                                 <Label Text="MÃ ĐẠI LÝ" Style="{StaticResource TableTitle}"/>
@@ -307,11 +307,8 @@
                                 
                             </ScrollView>
                         </Grid>
-                        
-                        
-                        
                     </Border>
-
+                    <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="#0eaafd" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </Border>
         </Border>

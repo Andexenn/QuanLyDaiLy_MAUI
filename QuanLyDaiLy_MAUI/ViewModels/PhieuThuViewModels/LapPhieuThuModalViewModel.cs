@@ -40,6 +40,8 @@ public partial class LapPhieuThuModalViewModel : BaseViewModel
 
     private async Task LoadDataAsync()
     {
+        IsLoading = true;
+        await Task.Yield();
         try
         {
             var dailies = await _daiLyService.GetAllDaiLyAsync();
@@ -48,6 +50,11 @@ public partial class LapPhieuThuModalViewModel : BaseViewModel
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+        }
+        finally
+        {
+            await Task.Yield();
+            IsLoading = false;
         }
     }
 
