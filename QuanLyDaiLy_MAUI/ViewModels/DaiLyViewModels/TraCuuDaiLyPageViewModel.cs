@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuanLyDaiLy_MAUI.Services;
 using QuanLyDaiLy_MAUI.Models;
@@ -126,10 +126,7 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
             DonViTinhs = new ObservableCollection<DonViTinh>(donViTinhs);
             LoaiDaiLies = new ObservableCollection<LoaiDaiLy>(loaiDaiLies);
             PhieuXuats = new ObservableCollection<PhieuXuat>(phieuXuats);
-            //_ = Task.Run(async () =>
-            //{
-                
-            //});
+
 			Debug.WriteLine($"{DaiLies.Count}");
         }
 		catch (Exception ex)
@@ -351,5 +348,188 @@ public partial class TraCuuDaiLyPageViewModel : BaseViewModel
         }
 
 		FilteredDaiLies = new ObservableCollection<DaiLy>(query);
+    }
+
+	partial void OnNoDaiLyFromChanged(double oldValue, double newValue)
+	{
+		if (newValue < 0)
+		{
+			NoDaiLyFrom = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Nợ đại lý từ không được âm.", "OK");
+		}	
+		if (newValue > NoDaiLyTo)
+		{
+			NoDaiLyFrom = NoDaiLyTo;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+    }
+
+    partial void OnNoDaiLyToChanged(double oldValue, double newValue)
+	{
+		if(newValue < 0)
+		{
+			NoDaiLyTo = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Nợ đại lý đến không được âm.", "OK");
+        }
+		if(newValue < NoDaiLyFrom)
+		{
+			NoDaiLyTo = NoDaiLyFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+        }
+    }
+
+    partial void OnMaPhieuXuatFromChanged(int oldValue, int newValue)
+	{
+		if (newValue < 0)
+		{
+			MaPhieuXuatFrom = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Mã phiếu xuất từ không được âm.", "OK");
+		}
+		if (newValue > MaPhieuXuatTo)
+		{
+			MaPhieuXuatFrom = MaPhieuXuatTo;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+    }
+
+    partial void OnMaPhieuXuatToChanged(int oldValue, int newValue)
+	{
+		if (newValue < 0)
+		{
+			MaPhieuXuatTo = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Mã phiếu xuất đến không được âm.", "OK");
+		}
+		if (newValue < MaPhieuXuatFrom)
+		{
+			MaPhieuXuatTo = MaPhieuXuatFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+        }
+    }
+
+    partial void OnNgayLapPhieuXuatFromChanged(DateTime oldValue, DateTime newValue)
+    {
+        if(newValue > NgayLapPhieuXuatTo)
+		{
+			NgayLapPhieuXuatFrom = NgayLapPhieuXuatTo;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+    }
+
+    partial void OnNgayLapPhieuXuatToChanged(DateTime oldValue, DateTime newValue)
+    {
+        if(newValue < NgayLapPhieuXuatFrom)
+		{
+			NgayLapPhieuXuatTo = NgayLapPhieuXuatFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+    }
+
+    partial void OnTongTienPhieuXuatFromChanged(double oldValue, double newValue)
+    {
+        if(newValue > TongTienPhieuXuatTo)
+		{
+			TongTienPhieuXuatFrom = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+    }
+
+    partial void OnTongTienPhieuXuatToChanged(double oldValue, double newValue)
+    {
+        if(newValue < TongTienPhieuXuatFrom)
+		{
+			TongTienPhieuXuatTo = TongTienPhieuXuatFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+        }
+    }
+
+    partial void OnSoLuongMatHangXuatFromChanged(int oldValue, int newValue)
+    {
+        if(newValue < 0)
+		{
+			SoLuongMatHangXuatFrom = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Số lượng mặt hàng xuất từ không", "OK");
+
+        }
+		if(newValue > SoLuongMatHangXuatTo)
+		{
+			SoLuongMatHangXuatFrom = SoLuongMatHangXuatTo;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+        }
+    }
+
+    partial void OnSoLuongMatHangXuatToChanged(int oldValue, int newValue)
+    {
+        if(newValue < 0 || newValue < SoLuongMatHangXuatFrom)
+		{
+			SoLuongMatHangXuatTo = SoLuongMatHangXuatFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Lỗi logic", "OK");
+        }
+	}
+	partial void OnDonGiaMatHangXuatFromChanged(double oldValue, double newValue)
+	{
+		if(newValue < 0)
+		{
+			DonGiaMatHangXuatFrom = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Đơn giá mặt hàng xuất từ không được âm", "OK");
+        }
+		if(newValue > DonGiaMatHangXuatTo)
+		{
+			DonGiaMatHangXuatFrom = DonGiaMatHangXuatTo;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+	}
+	partial void OnDonGiaMatHangXuatToChanged(double oldValue, double newValue)
+	{
+		if(newValue < 0 || newValue < DonGiaMatHangXuatFrom)
+		{
+			DonGiaMatHangXuatTo = DonGiaMatHangXuatFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+        }
+	
+    }
+
+    partial void OnThanhTienMatHangXuatFromChanged(double oldValue, double newValue)
+    {
+        if(ThanhTienMatHangXuatFrom < 0)
+		{
+			ThanhTienMatHangXuatFrom = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Thành tiền mặt hàng xuất từ không được âm", "OK");
+        }
+		if(ThanhTienMatHangXuatFrom > ThanhTienMatHangXuatTo)
+		{
+			ThanhTienMatHangXuatFrom = ThanhTienMatHangXuatTo;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+	}
+	partial void OnThanhTienMatHangXuatToChanged(double oldValue, double newValue)
+	{
+		if (ThanhTienMatHangXuatTo < 0 || ThanhTienMatHangXuatTo < ThanhTienMatHangXuatFrom)
+		{
+			ThanhTienMatHangXuatTo = ThanhTienMatHangXuatFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+		}
+	}
+
+    partial void OnSoLuongTonMatHangXuatFromChanged(int oldValue, int newValue)
+    {
+        if(SoLuongTonMatHangXuatFrom < 0)
+		{
+			SoLuongTonMatHangXuatFrom = 0;
+			Shell.Current.DisplayAlert("Lỗi", "Số lượng tồn mặt hàng xuất từ không được âm", "OK");
+        }
+		if(SoLuongTonMatHangXuatFrom > SoLuongTonMatHangXuatTo)
+		{
+			SoLuongTonMatHangXuatFrom = SoLuongTonMatHangXuatTo;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+        }
+    }
+
+    partial void OnSoLuongTonMatHangXuatToChanged(int oldValue, int newValue)
+    {
+        if(SoLuongTonMatHangXuatFrom < 0 || SoLuongTonMatHangXuatTo < SoLuongTonMatHangXuatFrom)
+		{
+			SoLuongMatHangXuatTo = SoLuongTonMatHangXuatFrom;
+			Shell.Current.DisplayAlert("Lỗi", "Logic không hợp lý", "OK");
+        }
     }
 }
