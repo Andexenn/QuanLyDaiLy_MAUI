@@ -85,18 +85,18 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding LapPhieuThuCommand}"/>
                 </Border.GestureRecognizers>
-                <Label Text="Lập phiếu thu tiền" FontFamily="MontserratSemiBold" FontSize="17"/>
+                <Label Text="Lập phiếu thu tiền" Padding="5" FontFamily="MontserratRegular" FontSize="17"/>
             </Border>
 
             <Border Grid.Column="2" BackgroundColor="#00aaff" Padding="7" StrokeShape="RoundRectangle 10" StrokeThickness="0">
-                <Label Text="Tìm đại lý" FontFamily="MontserratSemiBold" FontSize="17"/>
+                <Label Text="Tìm đại lý" Padding="5" FontFamily="MontserratRegular" FontSize="17"/>
             </Border>
 
             <Border Grid.Column="4" BackgroundColor="#00aaff" Padding="7" StrokeShape="RoundRectangle 10" StrokeThickness="0">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CloseWindowCommand}"/>
                 </Border.GestureRecognizers>
-                <Label Text="Thoát" FontFamily="MontserratSemiBold" FontSize="17"/>
+                <Label Text="Thoát" Padding="5" FontFamily="MontserratRegular" FontSize="17"/>
             </Border>
         </Grid>
     </Grid>

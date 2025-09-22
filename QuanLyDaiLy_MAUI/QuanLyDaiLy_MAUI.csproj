@@ -75,6 +75,9 @@
 	  <MauiXaml Update="Views\DaiLyViews\DanhSachDaiLyPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\DaiLyViews\LapBaoCaoDoanhSoTheoThangPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\DaiLyViews\LapPhieuXuatModal.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

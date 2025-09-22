@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuanLyDaiLy_MAUI.Views.DaiLyViews.LapBaoCaoDoanhSoTheoThangPage"
+             xmlns:viewmodels="clr-namespace:QuanLyDaiLy_MAUI.ViewModels.DaiLyViewModels"
+             xmlns:models="clr-namespace:QuanLyDaiLy_MAUI.Models"
+             x:DataType="viewmodels:LapBaoCaoDoanhSoTheoThangPageViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="smallTitle">
+                <Setter Property="FontFamily" Value="MontserratBold"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="header">
+                <Setter Property="FontFamily" Value="MontserratSemiBold"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <VerticalStackLayout BackgroundColor="#fff" Spacing="15">
+        <Grid ColumnDefinitions="auto,*,auto" Padding="20,20,20,0">
+            <Label Text="Lập báo cáo doanh số theo tháng" TextColor="Black" FontFamily="MontserratBold" FontSize="40"/>
+            <Button Grid.Column="2" BackgroundColor="#a2a2a2" FontFamily="FontAwesomeSolid" Text="{x:Static models:FontAwesome.x}" Command="{Binding CloseWindowCommand}"/>
+        </Grid>
+
+        <BoxView HeightRequest="2" />
+
+        <VerticalStackLayout Padding="20,0,20,20">
+            <Border BackgroundColor="#f7f9fd" Padding="10" StrokeShape="RoundRectangle 15">
+                <Grid RowDefinitions="auto,auto,auto,*" RowSpacing="20">
+                    <HorizontalStackLayout Spacing="30">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Năm lập báo cáo" Style="{StaticResource smallTitle}"/>
+                            <Border StrokeShape="RoundRectangle 10">
+                                <Entry />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Tháng lập báo cáo" Style="{StaticResource smallTitle}" />
+                            <Border StrokeShape="RoundRectangle 10">
+                                <Entry/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="20">
+                        <Border BackgroundColor="#00aaff" Padding="10" StrokeThickness="0" StrokeShape="RoundRectangle 10">
+                            <Label Text="Lập báo cáo doanh số" FontFamily="MontserratRegular" FontSize="15"/>
+                        </Border>
+
+                        <Border BackgroundColor="#00aaff" Padding="10" StrokeThickness="0" StrokeShape="RoundRectangle 10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CloseWindowCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="Thoát" FontFamily="MontserratRegular" FontSize="15"/>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Grid.Row="2" Spacing="20" HorizontalOptions="Center">
+                        <Label VerticalOptions="Center" Text="Tổng doanh số trong tháng của tất cả đại lý" Style="{StaticResource smallTitle}" />
+                        <Border VerticalOptions="Center" WidthRequest="300" StrokeShape="RoundRectangle 10">
+                            <Entry IsReadOnly="True" TextColor="Black"/>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <Border Grid.Row="3" StrokeShape="RoundRectangle 5">
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="*,*,*,*,*" Padding="10">
+                                <Label Text="STT" Style="{StaticResource header}"/>
+                                <Label Text="TÊN ĐẠI LÝ" Grid.Column="1" Style="{StaticResource header}"/>
+                                <Label Text="SỐ LƯỢNG PHIẾU XUẤT" Grid.Column="2" Style="{StaticResource header}" />
+                                <Label Text="TỔNG GIÁ TRỊ GIAO DỊCH TRONG THÁNG" Grid.Column="3" Style="{StaticResource header}"/>
+                                <Label Text="TỈ LỆ" Grid.Column="4" Style="{StaticResource header}"/>
+                            </Grid>
+                            <BoxView HeightRequest="2" />
+                            
+                            
+                            
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+        
+    </VerticalStackLayout>
+    
+</ContentPage>

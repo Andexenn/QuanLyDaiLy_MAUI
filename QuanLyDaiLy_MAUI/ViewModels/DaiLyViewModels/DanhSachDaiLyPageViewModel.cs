@@ -193,4 +193,10 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Error 🐞", ex.Message, "OK");
         }
     }
+
+	[RelayCommand]
+	private async Task GoToBaoCaoDoanhSoTheoThangAsync()
+	{
+		await Shell.Current.GoToAsync(nameof(LapBaoCaoDoanhSoTheoThangPage));
+    }
 }

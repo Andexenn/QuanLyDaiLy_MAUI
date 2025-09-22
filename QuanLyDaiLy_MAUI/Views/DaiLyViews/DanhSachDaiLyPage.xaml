@@ -167,6 +167,9 @@
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer  Command="{Binding GoToBaoCaoDoanhSoTheoThangCommand}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
                         <Label FontFamily="FontAwesomeSolid"
                                 Text="{x:Static models:FontAwesome.ScaleBalanced}"
                                 Style="{StaticResource Tab}"/>

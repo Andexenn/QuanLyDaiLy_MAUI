@@ -56,6 +56,7 @@ public static class AppModule
         services.AddTransient<LapPhieuXuatModal>();
         services.AddTransient<TraCuuDaiLyPage>();
         services.AddTransient<LapPhieuThuModal>();
+        services.AddTransient<LapBaoCaoDoanhSoTheoThangPage>();
 
         //dang ky viewmodel
         services.AddTransient<ViewModels.DaiLyViewModels.DanhSachDaiLyPageViewModel>();
@@ -63,6 +64,7 @@ public static class AppModule
         services.AddTransient<ViewModels.PhieuXuatViewModels.LapPhieuXuatModalViewModel>();
         services.AddTransient<ViewModels.DaiLyViewModels.TraCuuDaiLyPageViewModel>();
         services.AddTransient<ViewModels.PhieuThuViewModels.LapPhieuThuModalViewModel>();
+        services.AddTransient<ViewModels.DaiLyViewModels.LapBaoCaoDoanhSoTheoThangPageViewModel>();
 
         return services;
     }
