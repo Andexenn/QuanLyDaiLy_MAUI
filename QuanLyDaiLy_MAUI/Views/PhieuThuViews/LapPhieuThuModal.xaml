@@ -20,7 +20,7 @@
     <Grid RowDefinitions="auto,auto,auto" RowSpacing="10">
         <Grid ColumnDefinitions="auto,*,auto" ColumnSpacing="80" RowDefinitions="auto,auto" RowSpacing="15" >
             <Label Text="Lập phiếu thu tiền" TextColor="Black" FontFamily="MontserratBold" VerticalOptions="Center" FontSize="30"/>
-            <Button Grid.Column="2" FontFamily="FontAwesomeSolid" BackgroundColor="#a2a2a2" Text="{x:Static models:FontAwesome.x}" VerticalOptions="Center"/>
+            <Button Grid.Column="2" FontFamily="FontAwesomeSolid" BackgroundColor="#a2a2a2" Text="{x:Static models:FontAwesome.x}" VerticalOptions="Center" Command="{Binding CloseWindowCommand}"/>
             <BoxView HeightRequest="2" Grid.Row="1" Grid.ColumnSpan="3"/>
         </Grid>
 
@@ -31,41 +31,41 @@
                     <VerticalStackLayout Spacing="10" >
                         <Label Text="Tên đại lý" Style="{StaticResource title}"/>
                         <Border StrokeShape="RoundRectangle 10" BackgroundColor="#a2a2a2">
-                            <Picker TextColor="Black"/>
+                            <Picker TextColor="Black" ItemsSource="{Binding DaiLies}" ItemDisplayBinding="{Binding TenDaiLy}" SelectedItem="{Binding SelectedDaiLy}"/>
                         </Border>
                     </VerticalStackLayout>
                     <VerticalStackLayout Grid.Column="1" Spacing="10" >
                         <Label Text="Nợ của đại lý" Style="{StaticResource title}"/>
                         <Border StrokeShape="RoundRectangle 10" >
-                            <Entry TextColor="Black"/>
+                            <Entry TextColor="Black" Text="{Binding SelectedDaiLy.NoDaiLy}" IsReadOnly="True"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Spacing="10">
                         <Label Text="Điện thoại" Style="{StaticResource title}" />
                         <Border StrokeShape="RoundRectangle 10" >
-                            <Entry TextColor="Black"/>
+                            <Entry TextColor="Black" Text="{Binding SelectedDaiLy.SoDienThoai}" IsReadOnly="True"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="10">
                         <Label Text="Email" Style="{StaticResource title}"/>
                         <Border StrokeShape="RoundRectangle 10" >
-                            <Entry TextColor="Black"/>
+                            <Entry TextColor="Black" Text="{Binding SelectedDaiLy.Email}" IsReadOnly="True"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="10">
                         <Label Text="Địa chỉ" Style="{StaticResource title}"/>
                         <Border StrokeShape="RoundRectangle 10" >
-                            <Entry TextColor="Black"/>
+                            <Entry TextColor="Black" Text="{Binding SelectedDaiLy.DiaChi}" IsReadOnly="True"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="3" Spacing="10">
                         <Label Text="Ngày thu tiền" Style="{StaticResource title}"/>
                         <Border StrokeShape="RoundRectangle 10" >
-                            <DatePicker TextColor="Black" />
+                            <DatePicker TextColor="Black" Date="{Binding NgayThu}"/>
                         </Border>
                     </VerticalStackLayout>
 
@@ -90,6 +90,9 @@
             </Border>
 
             <Border Grid.Column="4" BackgroundColor="#00aaff" Padding="7" StrokeShape="RoundRectangle 10" StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CloseWindowCommand}"/>
+                </Border.GestureRecognizers>
                 <Label Text="Thoát" FontFamily="MontserratSemiBold" FontSize="17"/>
             </Border>
         </Grid>
