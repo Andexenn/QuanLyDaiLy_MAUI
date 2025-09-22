@@ -9,6 +9,7 @@ using QuanLyDaiLy_MAUI.Views;
 using QuanLyDaiLy_MAUI.Repositories;
 using QuanLyDaiLy_MAUI.Interfaces;
 using QuanLyDaiLy_MAUI.Views.DaiLyViews;
+using QuanLyDaiLy_MAUI.Views.PhieuThuViews;
 
 namespace QuanLyDaiLy_MAUI.DI;
 
@@ -36,6 +37,7 @@ public static class AppModule
         services.AddScoped<IMatHangService, MatHangServiceImpl>();
         services.AddScoped<ICTPhieuXuatService, CTPhieuXuatServiceImpl>();
         services.AddScoped<IDonViTinhService, DonViTinhServiceImpl>();
+        services.AddScoped<IPhieuThuService, PhieuThuServiceImpl>();
 
         // dang ky repository
         services.AddScoped<IDaiLyRepository, DaiLyRepository>();
@@ -46,18 +48,21 @@ public static class AppModule
         services.AddScoped<IMatHangRepository, MatHangRepository>();
         services.AddScoped<ICTPhieuXuatRepository, CTPhieuXuatRepository>();
         services.AddScoped<IDonViTinhRepository, DonViTinhRepository>();
+        services.AddScoped<IPhieuThuRepository, PhieuThuRepository>();
 
         // dang ky view
         services.AddTransient<DanhSachDaiLyPage>();
         services.AddTransient<ThemDaiLyModal>();
         services.AddTransient<LapPhieuXuatModal>();
         services.AddTransient<TraCuuDaiLyPage>();
+        services.AddTransient<LapPhieuThuModal>();
 
         //dang ky viewmodel
         services.AddTransient<ViewModels.DaiLyViewModels.DanhSachDaiLyPageViewModel>();
         services.AddTransient<ViewModels.DaiLyViewModels.ThemDaiLyModalViewModel>();
         services.AddTransient<ViewModels.PhieuXuatViewModels.LapPhieuXuatModalViewModel>();
         services.AddTransient<ViewModels.DaiLyViewModels.TraCuuDaiLyPageViewModel>();
+        services.AddTransient<ViewModels.PhieuThuViewModels.LapPhieuThuModalViewModel>();
 
         return services;
     }

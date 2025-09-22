@@ -17,7 +17,9 @@ public static partial class DatabaseSeeder
 		SeedDaiLy(modelBuilder);
 		SeedDonViTinh(modelBuilder);
         SeedPhieuXuat(modelBuilder);
-		SeedMatHang(modelBuilder);
+        SeedPhieuThu(modelBuilder);
+        SeedMatHang(modelBuilder);
 		SeedCTPhieuXuat(modelBuilder);
-	}
+		
+    }
 }

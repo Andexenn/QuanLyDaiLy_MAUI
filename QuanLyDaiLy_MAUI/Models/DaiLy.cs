@@ -17,6 +17,7 @@ public class DaiLy
 
     // Navigation properties
     public virtual List<PhieuXuat> PhieuXuats { get; set; } = [];
+    public virtual List<PhieuThu> PhieuThus { get; set; } = [];
     public virtual LoaiDaiLy? LoaiDaiLy { get; set; } = null!;
     public virtual Quan? Quan { get; set; } = null!;
 

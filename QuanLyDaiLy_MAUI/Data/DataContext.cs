@@ -17,6 +17,7 @@ public class DataContext : DbContext
     public DbSet<CTPhieuXuat> CTPhieuXuats { get; set; } = null!;
     public DbSet<MatHang> MatHangs { get; set; } = null!;
     public DbSet<DonViTinh> DonViTinhs { get; set; } = null!;
+    public DbSet<PhieuThu> PhieuThus { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -65,6 +66,13 @@ public class DataContext : DbContext
             .HasMany(dvt => dvt.MatHangs)
             .WithOne(mh => mh.DonViTinh)
             .HasForeignKey(mh => mh.MaDonViTinh)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // PhieuThu - DaiLy (N - 1)
+        modelBuilder.Entity<PhieuThu>()
+            .HasOne(pt => pt.DaiLy)
+            .WithMany(dl => dl.PhieuThus)
+            .HasForeignKey(pt => pt.MaDaiLy)
             .OnDelete(DeleteBehavior.Cascade);
 
         DatabaseSeeder.SeedData(modelBuilder);

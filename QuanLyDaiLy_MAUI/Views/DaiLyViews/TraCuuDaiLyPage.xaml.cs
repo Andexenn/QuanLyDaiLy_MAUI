@@ -10,5 +10,4 @@ public partial class TraCuuDaiLyPage : ContentPage
 		this.BindingContext = vm;
     }
 
-
 }

@@ -143,6 +143,9 @@
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToPhieuThuCommand}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
                         <Label FontFamily="FontAwesomeSolid"
                                 Text="{x:Static models:FontAwesome.Inbox}"
                                 Style="{StaticResource Tab}"/>

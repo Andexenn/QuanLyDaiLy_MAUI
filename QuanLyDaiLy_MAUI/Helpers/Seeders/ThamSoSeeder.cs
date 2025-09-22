@@ -11,7 +11,8 @@ public static partial class DatabaseSeeder
 		Debug.WriteLine("Seeding ThamSo data...");
 #endif
 		modelBuilder.Entity<ThamSo>().HasData(
-			new ThamSo { TenThamSo = "SoLuongDaiLyToiDa", GiaTri = "10" }
+			new ThamSo { TenThamSo = "SoLuongDaiLyToiDa", GiaTri = "10" },
+			new ThamSo { TenThamSo = "QuyDinhTienThuTienNo", GiaTri = "1000000" }
 		);
 	}
 }

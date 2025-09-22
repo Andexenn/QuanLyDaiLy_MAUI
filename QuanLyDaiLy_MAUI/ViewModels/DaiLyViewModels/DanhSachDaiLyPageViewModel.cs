@@ -7,6 +7,8 @@ using QuanLyDaiLy_MAUI.ViewModels;
 using QuanLyDaiLy_MAUI.Views.DaiLyViews;
 using QuanLyDaiLy_MAUI.ViewModels.PhieuXuatViewModels;
 using System.Collections.ObjectModel;
+using QuanLyDaiLy_MAUI.Views.PhieuThuViews;
+using QuanLyDaiLy_MAUI.ViewModels.PhieuThuViewModels;
 
 
 namespace QuanLyDaiLy_MAUI.ViewModels.DaiLyViewModels;
@@ -170,4 +172,25 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 	{
 		await Shell.Current.GoToAsync(nameof(TraCuuDaiLyPage));
 	}
+
+	[RelayCommand]
+	[Obsolete]
+	private async Task GoToPhieuThuAsync()
+	{
+        try
+        {
+            var lapPhieuThuModal = _serviceProvider.GetService<LapPhieuThuModalViewModel>();
+            var lapPhieuThuPopup = new LapPhieuThuModal(lapPhieuThuModal!);
+
+            var mainPage = Application.Current?.MainPage;
+            if (mainPage != null)
+            {
+                await mainPage.ShowPopupAsync(lapPhieuThuPopup!);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error 🐞", ex.Message, "OK");
+        }
+    }
 }
