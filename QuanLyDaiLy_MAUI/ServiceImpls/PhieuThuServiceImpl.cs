@@ -7,7 +7,7 @@ namespace QuanLyDaiLy_MAUI.ServiceImpls;
 public class PhieuThuServiceImpl : IPhieuThuService
 {
 	private IPhieuThuRepository _phieuThuRepository;
-	public PhieuThuServiceImpl(PhieuThuRepository phieuThuRepository)
+	public PhieuThuServiceImpl(IPhieuThuRepository phieuThuRepository)
 	{
 		_phieuThuRepository = phieuThuRepository;
     }
