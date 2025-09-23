@@ -54,6 +54,8 @@ public partial class LapBaoCaoDoanhSoTheoThangPageViewModel : BaseViewModel
 	[RelayCommand]
 	void LapBaoCaoDoanhSo()
 	{
+		DanhSachDaiLyHopLe.Clear();
+		TongGiaTriGiaoDichCuaTatCaDaiLy = 0;
 		foreach(var dl in DaiLies)
 		{
 			var phieuxuats = PhieuXuats.Where(px => px.MaDaiLy == dl.MaDaiLy && px.NgayLapPhieu.Month == ThangBaoCao && px.NgayLapPhieu.Year == NamBaoCao).ToList();
