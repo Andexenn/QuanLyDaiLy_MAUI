@@ -332,22 +332,31 @@
             </Border>
 
 
-            <Grid Grid.Row="3" ColumnDefinitions="*, auto">
-                <Border Grid.Column="1" StrokeThickness="0">
-                    <HorizontalStackLayout Spacing="20">
-                        <!--<Border Padding="10" StrokeShape="RoundRectangle 10">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BeforeButtonCommand}"/>
-                            </Border.GestureRecognizers>
-                            <HorizontalStackLayout Spacing="15">
-                                <Label FontFamily="FontAwesomeSolid"
-                                       FontSize="20"
-                                       TextColor="Black"
-                                       Text="{x:Static models:FontAwesome.TentArrowTurnLeft}"
-                                       VerticalOptions="Center"/>
-                                <Label Text="Trang trước" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
-                            </HorizontalStackLayout>
-                        </Border>-->
+            <Grid Grid.Row="3" ColumnDefinitions="auto, *, auto">
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="Go To Page: " TextColor="Black" VerticalOptions="Center"/>
+                    <Border VerticalOptions="Center">
+                        <Entry TextColor="Black" Text="{Binding GoToPage}"/>
+                    </Border>
+                    <Button Text="Go" Command="{Binding GoToIndicatedPageCommand}" BackgroundColor="#0eaafd" TextColor="White"/>
+                </HorizontalStackLayout>
+                <Border Grid.Column="2" StrokeThickness="0">
+                    <HorizontalStackLayout Spacing="10">
+
+                        <buttons:SfButton Background="White"
+                                          CornerRadius="10"
+                                          Stroke="Grey"
+                                          Padding="5,0,5,0"
+                                          StrokeThickness="3"
+                                          Command="{Binding FirstPageCommand}">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="15" Padding="5,0,5,0">
+                                        <Label Text="Trang đầu" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
 
                         <buttons:SfButton Background="White"
                                           CornerRadius="10"
@@ -384,20 +393,7 @@
                                 </Border>
                             </HorizontalStackLayout>
                         </Border>
-
-                        <!--<Border Padding="5, 0, 5,0" StrokeShape="RoundRectangle 10">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NextButtonCommand}"/>
-                            </Border.GestureRecognizers>
-                            <HorizontalStackLayout Spacing="15">
-                                <Label FontFamily="FontAwesomeSolid"
-                                       FontSize="20"
-                                       TextColor="Black"
-                                       Text="{x:Static models:FontAwesome.DiamondTurnRight}"
-                                       VerticalOptions="Center"/>
-                                <Label Text="Trang sau" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
-                            </HorizontalStackLayout>
-                        </Border>-->
+                        
                         <buttons:SfButton Background="White"
                                           CornerRadius="10"
                                           Stroke="Grey"
@@ -413,6 +409,21 @@
                                                Text="{x:Static models:FontAwesome.DiamondTurnRight}"
                                                VerticalOptions="Center"/>
                                         <Label Text="Trang sau" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+
+                        <buttons:SfButton Background="White"
+                                          CornerRadius="10"
+                                          Stroke="Grey"
+                                          Padding="5,0,5,0"
+                                          StrokeThickness="3"
+                                          Command="{Binding LastPageCommand}">
+                            <buttons:SfButton.Content>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="15" Padding="5,0,5,0">
+                                        <Label Text="Trang cuối" TextColor="Black" VerticalOptions="Center" FontFamily="MontserratRegular" FontSize="13"/>
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </buttons:SfButton.Content>

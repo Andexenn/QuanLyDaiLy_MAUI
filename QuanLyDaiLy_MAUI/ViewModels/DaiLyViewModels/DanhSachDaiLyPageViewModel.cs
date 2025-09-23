@@ -38,6 +38,8 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 	private int nextPage = 2;
 	[ObservableProperty]
 	private ObservableCollection<DaiLy> displayDaiLies = [];
+	[ObservableProperty]
+	private int goToPage;
 
     public async Task LoadDaiLyAsync()
 	{
@@ -198,5 +200,67 @@ public partial class DanhSachDaiLyPageViewModel : BaseViewModel
 	private async Task GoToBaoCaoDoanhSoTheoThangAsync()
 	{
 		await Shell.Current.GoToAsync(nameof(LapBaoCaoDoanhSoTheoThangPage));
+    }
+
+	[RelayCommand]
+	private async Task FirstPage()
+	{
+		try
+		{
+            CurrentPage = 1;
+            BeforePage = 0;
+            NextPage = 2;
+            DisplayDaiLies = new ObservableCollection<DaiLy>(DaiLies.Take(20));
+        }
+		catch (Exception ex)
+		{
+			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+        }
+    }
+
+	[RelayCommand]
+	private async Task LastPage()
+	{
+		try
+		{
+			CurrentPage = (int)Math.Ceiling((double)DaiLies.Count / 20);
+			BeforePage = CurrentPage - 1;
+			NextPage = 0;
+			DisplayDaiLies = new ObservableCollection<DaiLy>(DaiLies.Skip((CurrentPage - 1) * 20).Take(20));
+		}
+		catch (Exception ex)
+		{
+			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+		}
+	}
+
+	[RelayCommand]
+	private async Task GoToIndicatedPage()
+	{
+		try
+		{
+			if(int.TryParse(GoToPage.ToString(), out int pageNumber))
+			{
+				if(pageNumber < 1 || pageNumber > (int)Math.Ceiling((double)DaiLies.Count / 20))
+				{
+					await Shell.Current.DisplayAlert("Error", "Số trang không hợp lệ", "OK");
+					return;
+				}
+				CurrentPage = pageNumber;
+				BeforePage = CurrentPage - 1;
+				NextPage = CurrentPage + 1;
+				if (NextPage > (int)Math.Ceiling((double)DaiLies.Count / 20))
+					NextPage = 0;
+				DisplayDaiLies = new ObservableCollection<DaiLy>(DaiLies.Skip((CurrentPage - 1) * 20).Take(20));
+			}
+			else
+			{
+				await Shell.Current.DisplayAlert("Error", "Vui lòng nhập số trang hợp lệ", "OK");
+            }
+		}
+		catch (Exception ex)
+		{
+			await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 }
